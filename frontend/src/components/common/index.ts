@@ -1,2 +1,1 @@
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-export default () => {}
+export { Button } from 'components/common/button/Button'

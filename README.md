@@ -12,4 +12,4 @@
 
 ### Don't forget to install all dependencies with tw command: `npm i` *in backend folder* & `npm i` *in frontend folder*
 
-### Start the project with `npm run dev`
+### Start the project with `npm run dev` *(in backend folder)*
