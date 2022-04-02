@@ -2,13 +2,13 @@ import React, { ReactElement } from 'react'
 
 import { Link, Outlet } from 'react-router-dom'
 
-import s from 'components/header/style/header.module.scss'
 import { Paths } from 'enums'
+import { StyledHeader, Main, Container } from 'styles'
 
 export const Header = (): ReactElement => (
   <>
-    <header className={s.header}>
-      <div className={s.container}>
+    <StyledHeader>
+      <Container>
         <Link to={Paths.Home}>Home page</Link>
         <Link to={Paths.Profile}>Profile</Link>
         <Link to={Paths.Auth}>Auth</Link>
@@ -16,12 +16,12 @@ export const Header = (): ReactElement => (
         <Link to={Paths.RestorePassword}>Restore Password</Link>
         <Link to={Paths.ChangePassword}>Change Password</Link>
         <Link to={Paths.Test}>Test</Link>
-      </div>
-    </header>
-    <main className={s.main}>
-      <div className={s.mainContainer}>
+      </Container>
+    </StyledHeader>
+    <Main>
+      <Container>
         <Outlet />
-      </div>
-    </main>
+      </Container>
+    </Main>
   </>
 )
