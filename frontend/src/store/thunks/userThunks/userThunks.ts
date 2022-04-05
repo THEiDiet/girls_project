@@ -1,15 +1,17 @@
 import { Dispatch } from '@reduxjs/toolkit'
 
+import { userApi } from '../../../api'
+
 import { login } from 'store/reducers/testReducer'
 
 type LoginT = {
-  name: string
+  email: string
   password: string
+  rememberMe: boolean
 }
 
-export const loginT =
-  ({ name, password }: LoginT) =>
-  (dispatch: Dispatch) => {
-    console.log(name, password)
-    dispatch(login('string'))
-  }
+export const loginT = (body: LoginT) => (dispatch: Dispatch) => {
+  const res = userApi.login(body)
+  console.log(res)
+  dispatch(login('string'))
+}
