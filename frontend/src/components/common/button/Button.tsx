@@ -19,7 +19,15 @@ export const Button: React.FC<SuperButtonPropsType> = ({
   const finalClassName = `${s.button} ${red ? s.red : s.default} ${className}`
 
   // eslint-disable-next-line react/jsx-props-no-spreading
-  return <button type="button" className={finalClassName} {...restProps} />
+  return (
+    <button
+      style={{ backgroundColor: red ? 'red' : '' }}
+      type="button"
+      className={finalClassName}
+      // eslint-disable-next-line react/jsx-props-no-spreading
+      {...restProps}
+    />
+  )
 }
 
 Button.defaultProps = { red: false }
