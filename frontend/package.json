@@ -2,7 +2,7 @@
   "name": "group_project",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://THEiDiet.github.io/girls_project/",
+  "homepage": "https://THEiDiet.github.io/",
   "dependencies": {
     "@reduxjs/toolkit": "^1.8.0",
     "@testing-library/jest-dom": "^5.16.2",
@@ -15,6 +15,7 @@
     "@types/react-redux": "^7.1.23",
     "@types/styled-components": "^5.1.24",
     "axios": "^0.26.1",
+    "formik": "^2.2.9",
     "framer-motion": "^6.2.8",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",

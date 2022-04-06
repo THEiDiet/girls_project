@@ -1,1 +1,1 @@
-export type { UserType } from 'types/UserType'
+export type { AuthT } from 'types/UserType'
