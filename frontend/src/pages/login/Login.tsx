@@ -3,6 +3,7 @@ import React, { FC } from 'react'
 import { useFormik } from 'formik'
 import { useDispatch } from 'react-redux'
 
+import { Button } from '../../components/common'
 import { useAppSelector } from '../../hooks/useAppDispatchAndSelector'
 import { loginT } from '../../store/thunks/userThunks/userThunks'
 
@@ -59,9 +60,10 @@ export const Login: FC = () => {
           />
         </div>
         <div>
-          <button type="submit">Log in</button>
+          <Button>Log in</Button>
         </div>
       </form>
+
       <button type="button" onClick={handleClick}>
         Get test string
       </button>

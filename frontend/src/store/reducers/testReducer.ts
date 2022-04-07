@@ -4,6 +4,8 @@ const initialState = {
   counter: 0,
   users: [],
   login: '',
+  authMe: true,
+  isInitialized: true,
 }
 const testSlice = createSlice({
   name: 'testReducer',

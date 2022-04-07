@@ -14,4 +14,5 @@ export const loginT = (body: LoginT) => (dispatch: Dispatch) => {
   const res = userApi.login(body)
   console.log(res)
   dispatch(login('string'))
+  // dispatch(login())
 }
