@@ -14,6 +14,7 @@ appUse(app);
 routes(app);
 
 const server = http.createServer(app);
+// @ts-ignore
 const socketServer = socketIo(server);
 
 socketServer.on('connection', onConnect(socketServer));
