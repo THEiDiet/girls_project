@@ -1,6 +1,8 @@
 import { AxiosError } from 'axios'
 
 import { instance } from 'api/config'
+import { Responses } from 'enums'
+import { AuthT } from 'types'
 
 const Responses = 201
 export const userApi = {
