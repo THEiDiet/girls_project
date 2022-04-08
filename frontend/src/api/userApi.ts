@@ -1,21 +1,17 @@
-import { AxiosError } from 'axios'
-
 import { instance } from 'api/config'
 
-const Responses = 201
 export const userApi = {
   // eslint-disable-next-line no-return-await
   ping: async () => await instance.get('ping'),
-  register: async (body: any) => {
-    // eslint-disable-next-line no-return-await
+  register: async (body: Omit<AuthT, 'rememberMe'>) => {
     try {
       const res = await instance.post('auth/register', JSON.stringify(body))
-      if (res.status === Responses) {
+      if (res.status === Responses.Created) {
         return res.data
       }
       return res.data
     } catch (e) {
-      return (e as AxiosError)?.response?.data?.error
+      return (e as AxiosError)?.response?.data?.error || 'some error'
     }
   },
   // eslint-disable-next-line no-return-await
@@ -38,4 +34,21 @@ export const userApi = {
   },
   // eslint-disable-next-line no-return-await
   update: async (body: any) => await instance.put('auth/me', JSON.stringify(body)),
+  forgot: async (email: string) => {
+    const body = {
+      email,
+      from: 'alex96kravets@gmail.com',
+      message: `<div style='background-color: lime; padding: 15px'>password recovery link: 
+                <a href='http://localhost:3000/#/set-new-password$token$'>link</a></div>`,
+    }
+    try {
+      const res = await instance.post('auth/forgot', JSON.stringify(body))
+      if (res.status === Responses.Success) {
+        return res.data
+      }
+      return res.data
+    } catch (e) {
+      return (e as AxiosError)?.response?.data?.error
+    }
+  },
 }
