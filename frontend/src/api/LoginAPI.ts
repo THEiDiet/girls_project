@@ -12,7 +12,6 @@ export const LoginAPI = {
   // eslint-disable-next-line no-return-await
   ping: async () => await instance.get('ping'),
   // eslint-disable-next-line no-return-await
-  login: async (body: any) => await instance.post('auth/login', JSON.stringify(body)),
   login: async (body: any) => {
     try {
       const res = await instance.post('auth/login', JSON.stringify(body))

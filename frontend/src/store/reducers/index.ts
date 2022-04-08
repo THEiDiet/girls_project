@@ -1,1 +1,2 @@
-export { add, subst, getUsers, testReducer } from 'store/reducers/testReducer'
+export { add, subst, getUsers, appReducer } from 'store/reducers/appReducer'
+export { login, userReducer } from 'store/reducers/userReducer'

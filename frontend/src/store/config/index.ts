@@ -1,11 +1,12 @@
 import { configureStore, MiddlewareArray } from '@reduxjs/toolkit'
 import thunk from 'redux-thunk'
 
-import { testReducer } from 'store/reducers'
+import { appReducer, userReducer } from 'store/reducers'
 
 export const store = configureStore({
   reducer: {
-    test: testReducer,
+    test: appReducer,
+    user: userReducer,
   },
   middleware: new MiddlewareArray().concat(thunk),
 })

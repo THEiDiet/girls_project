@@ -22,11 +22,10 @@ export const Auth: FC = () => {
   }
   return (
     <div>
+      <input type="text"/>
+      <input type="text"/>
       <button type="button" onClick={authOnClick}>
         auth
-      </button>
-      <button type="button" onClick={loginOnClick}>
-        log in
       </button>
     </div>
   )

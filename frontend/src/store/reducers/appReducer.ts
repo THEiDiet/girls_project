@@ -4,7 +4,7 @@ const initialState = {
   counter: 0,
   users: [],
   login: '',
-  authMe: true,
+  authMe: false,
   isInitialized: true,
   isFetching: true,
 }
@@ -31,4 +31,4 @@ const testSlice = createSlice({
   },
 })
 export const { add, subst, getUsers, login } = testSlice.actions
-export const testReducer = testSlice.reducer
+export const appReducer = testSlice.reducer
