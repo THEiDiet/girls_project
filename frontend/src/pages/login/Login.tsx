@@ -1,11 +1,13 @@
 import React, { useState } from 'react'
 
 import { useFormik } from 'formik'
-import { useDispatch } from 'react-redux'
 import { Navigate } from 'react-router-dom'
 
-import { LoginAPI } from '../../api/LoginAPI'
 import { Button } from '../../components/common'
+
+import { LoginAPI } from 'api/LoginAPI'
+import { useAppDispatch } from 'hooks/useAppDispatchAndSelector'
+import { login } from 'store/reducers/userReducer'
 
 const MIN_PASS_LENGTH = 7
 
@@ -36,25 +38,26 @@ type FormikErrorType = {
   rememberMe?: boolean
 }
 
-export const Login = () => {
-  // const [isSecurity, setIsSecurity] = useState(false)
+export const Login = (): any => {
   const [userName, setUserName] = useState('')
   const [error, setError] = useState('')
+  const dispatch = useAppDispatch()
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
   const onSubmitForm = async (values: any): Promise<any> => {
-    const res: AuthResponse = await LoginAPI.login(values)
+    const res: any = await LoginAPI.login(values)
     if (typeof res === 'string') {
       setError(res)
       return { error: res }
     }
-    setUserName(res.addedUser.email)
-    return { name: res.addedUser.email }
+    setUserName(res.email)
+    dispatch(login(res.name))
+    return { name: res.email }
   }
 
   const formik = useFormik({
     initialValues: {
-      email: '',
-      password: '',
+      email: 'nya-admin@nya.nya',
+      password: '1qazxcvBG',
       rememberMe: false,
     },
     validate: values => {
@@ -73,6 +76,7 @@ export const Login = () => {
       return errors
     },
     onSubmit: values => {
+      // eslint-disable-next-line consistent-return
       onSubmitForm(values).then(res => {
         if (res?.email) {
           formik.resetForm()
@@ -87,6 +91,7 @@ export const Login = () => {
     <div>
       <form onSubmit={formik.handleSubmit}>
         <div>
+          {/* eslint-disable-next-line react/jsx-props-no-spreading */}
           <input {...formik.getFieldProps('email')} />
           {formik.touched.email && formik.errors.email && (
             <div style={{ color: 'red' }}>{formik.errors.email}</div>
@@ -94,6 +99,7 @@ export const Login = () => {
         </div>
 
         <div>
+          {/* eslint-disable-next-line react/jsx-props-no-spreading */}
           <input {...formik.getFieldProps('password')} />
           {formik.touched.password && formik.errors.password && (
             <div style={{ color: 'red' }}>{formik.errors.password}</div>
@@ -103,6 +109,7 @@ export const Login = () => {
           <input
             type="checkbox"
             checked={formik.values.rememberMe}
+            // eslint-disable-next-line react/jsx-props-no-spreading
             {...formik.getFieldProps('rememberMe')}
           />
           remember me

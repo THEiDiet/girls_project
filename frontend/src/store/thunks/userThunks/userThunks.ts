@@ -1,6 +1,6 @@
 import { Dispatch } from '@reduxjs/toolkit'
 
-import { login } from 'store/reducers/testReducer'
+import { login } from 'store/reducers/appReducer'
 
 type LoginT = {
   email: string
