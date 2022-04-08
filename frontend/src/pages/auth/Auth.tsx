@@ -1,33 +1,35 @@
-/*eslint-disable*/
 import React, { FC, useState } from 'react'
 
-import { userApi } from 'api/userApi'
 import { useFormik } from 'formik'
-import { AuthT } from 'types/UserType'
-import { CustomInput } from 'components/common/input/Input'
 import { NavLink } from 'react-router-dom'
-import { Paths } from 'enums/Paths'
+
+import { userApi } from 'api/userApi'
 import { Button } from 'components/common/button/Button'
+import { CustomInput } from 'components/common/input/Input'
+import { Paths } from 'enums/Paths'
+import { AuthT } from 'types/UserType'
 
 const MIN_PASS_LENGTH = 7
 
-type AuthResponse = {
-  addedUser: {
-    '_id': string
-    'email': string
-    'rememberMe': boolean
-    'isAdmin': boolean
-    'name': string
-    'verified': boolean
-    'publicCardPacksCount': number
-    'created': string
-    'updated': string
-    '__v': number
-  }
-} | string
+type AuthResponse =
+  | {
+      addedUser: {
+        _id: string
+        email: string
+        rememberMe: boolean
+        isAdmin: boolean
+        name: string
+        verified: boolean
+        publicCardPacksCount: number
+        created: string
+        updated: string
+        __v: number
+      }
+    }
+  | string
 
 type handleResponseT = {
-  [key:string]:string
+  [key: string]: string
 }
 
 export const Auth: FC = () => {
@@ -35,15 +37,16 @@ export const Auth: FC = () => {
   const [userName, setUserName] = useState('')
   const [error, setError] = useState('')
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-  const onSubmitForm = async (values: Omit<AuthT, 'rememberMe'>):Promise<handleResponseT> => {
+  const onSubmitForm = async (
+    values: Omit<AuthT, 'rememberMe'>,
+  ): Promise<handleResponseT> => {
     const res: AuthResponse = await userApi.register(values)
     if (typeof res === 'string') {
       setError(res)
-      return {error:res}
-    } else {
-      setUserName(res.addedUser.name)
-      return {name:res.addedUser.name}
+      return { error: res }
     }
+    setUserName(res.addedUser.name)
+    return { name: res.addedUser.name }
   }
 
   const formik = useFormik({
@@ -67,16 +70,15 @@ export const Auth: FC = () => {
     },
     onSubmit: (values: Omit<AuthT, 'rememberMe'>) => {
       onSubmitForm(values).then((res: handleResponseT) => {
-        if(res?.name){
+        if (res?.name) {
           formik.resetForm()
-          console.log('hello',res?.name)
+          console.log('hello', res?.name)
         } else console.log(res?.error || 'Something went wrong')
       })
     },
   })
 
   return (
-
     <form onSubmit={formik.handleSubmit}>
       <div>
         <CustomInput

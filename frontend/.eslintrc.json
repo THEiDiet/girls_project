@@ -45,7 +45,7 @@
       "error"
     ],
     "@typescript-eslint/no-unused-vars": [
-      "error"
+      "off"
     ],
     "@typescript-eslint/no-magic-numbers": [
       "error",
@@ -63,11 +63,11 @@
         "allowExpressions": true
       }
     ],
-    "prettier/prettier": "error",
+    "prettier/prettier": "warn",
     "react/prop-types": 0,
     "react/display-name": "off",
     "react/react-in-jsx-scope": "off",
-    "react/destructuring-assignment": "error",
+    "react/destructuring-assignment": "warn",
     "react/jsx-filename-extension": [
       1,
       {
