@@ -6,6 +6,7 @@ const initialState = {
   login: '',
   authMe: true,
   isInitialized: true,
+  isFetching: true,
 }
 const testSlice = createSlice({
   name: 'testReducer',

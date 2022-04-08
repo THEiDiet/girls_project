@@ -4,7 +4,7 @@ import React from 'react'
 
 import spinner from './spinner.gif'
 
-const Preloader = () => (
+const Spinner = () => (
   <img
     src={spinner}
     alt="Loading..."
@@ -12,4 +12,4 @@ const Preloader = () => (
   />
 )
 
-export default Preloader
+export default Spinner
