@@ -1,8 +1,34 @@
-import React, { FC } from 'react'
+import React, { useState } from 'react'
 
 import { useFormik } from 'formik'
+import { useDispatch } from 'react-redux'
+import { Navigate } from 'react-router-dom'
 
+import { LoginAPI } from '../../api/LoginAPI'
 import { Button } from '../../components/common'
+
+const MIN_PASS_LENGTH = 7
+
+type AuthResponse =
+  | {
+      addedUser: {
+        _id: string
+        email: string
+        rememberMe: boolean
+        isAdmin: boolean
+        name: string
+        verified: boolean
+        publicCardPacksCount: number
+        created: string
+        updated: string
+        __v: number
+      }
+    }
+  | string
+
+type handleResponseT = {
+  [key: string]: string
+}
 
 type FormikErrorType = {
   email?: string
@@ -11,6 +37,20 @@ type FormikErrorType = {
 }
 
 export const Login = () => {
+  // const [isSecurity, setIsSecurity] = useState(false)
+  const [userName, setUserName] = useState('')
+  const [error, setError] = useState('')
+  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+  const onSubmitForm = async (values: any): Promise<any> => {
+    const res: AuthResponse = await LoginAPI.login(values)
+    if (typeof res === 'string') {
+      setError(res)
+      return { error: res }
+    }
+    setUserName(res.addedUser.email)
+    return { name: res.addedUser.email }
+  }
+
   const formik = useFormik({
     initialValues: {
       email: '',
@@ -27,14 +67,20 @@ export const Login = () => {
 
       if (!values.password) {
         errors.password = 'Required'
-      } else if (values.password.length < 3) {
-        errors.password = 'Password should be bigger'
+      } else if (values.password.length < MIN_PASS_LENGTH) {
+        errors.password = 'Password should be longer than 7 letters'
       }
       return errors
     },
     onSubmit: values => {
-      alert(JSON.stringify(values))
-      formik.resetForm()
+      onSubmitForm(values).then(res => {
+        if (res?.email) {
+          formik.resetForm()
+          console.log('hello', res?.email)
+          return <Navigate to="/profile" />
+        }
+        console.log(res?.error || 'Something went wrong')
+      })
     },
   })
   return (

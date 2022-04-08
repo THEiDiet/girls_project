@@ -3,13 +3,13 @@ import { Dispatch } from '@reduxjs/toolkit'
 import { login } from 'store/reducers/testReducer'
 
 type LoginT = {
-  name: string
+  email: string
   password: string
 }
 
 export const loginT =
-  ({ name, password }: LoginT) =>
+  ({ email, password }: LoginT) =>
   (dispatch: Dispatch) => {
-    console.log(name, password)
+    console.log(email, password)
     dispatch(login('string'))
   }
