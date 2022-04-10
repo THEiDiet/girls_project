@@ -2,10 +2,10 @@ import React, { useState } from 'react'
 
 import { useFormik } from 'formik'
 import { Navigate } from 'react-router-dom'
+// import { setUserData } from 'store/reducers/userReducer'
 
 import { LoginAPI } from 'api/LoginAPI'
 import { useAppDispatch } from 'hooks/useAppDispatchAndSelector'
-import { setUserData } from 'store/reducers/userReducer'
 import { Button } from 'styles'
 
 const MIN_PASS_LENGTH = 7
@@ -48,7 +48,7 @@ export const Login = (): any => {
       setError(res)
       return { error: res }
     }
-    dispatch(setUserData(res))
+    // dispatch(setUserData(res))
     return { name: res.email }
   }
   const formik = useFormik({

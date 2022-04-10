@@ -9,6 +9,7 @@ export const store = configureStore({
     user: userReducer,
   },
   middleware: new MiddlewareArray().concat(thunk),
+  devTools: process.env.NODE_ENV !== 'production',
 })
 
 export type RootState = ReturnType<typeof store.getState>
