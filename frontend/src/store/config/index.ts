@@ -5,7 +5,7 @@ import { appReducer, userReducer } from 'store/reducers'
 
 export const store = configureStore({
   reducer: {
-    test: appReducer,
+    app: appReducer,
     user: userReducer,
   },
   middleware: new MiddlewareArray().concat(thunk),

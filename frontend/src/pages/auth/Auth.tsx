@@ -1,17 +1,13 @@
 import React, { FC, useState } from 'react'
 
 import { useFormik } from 'formik'
-import { NavLink } from 'react-router-dom'
 
 import { validatePassAndEmail } from '../../utils'
 
 import { userApi } from 'api/userApi'
 import { Input } from 'components/common/input/Input'
-import { Paths } from 'enums/Paths'
-import { FormWrapper, Button, InputsWrapper } from 'styles'
+import { Button, FormWrapper, InputsWrapper } from 'styles'
 import { AuthT } from 'types/UserType'
-
-const MIN_PASS_LENGTH = 7
 
 type AuthResponse =
   | {
@@ -35,20 +31,13 @@ type handleResponseT = {
 }
 
 export const Auth: FC = () => {
-  const [isSecurity, setIsSecurity] = useState(false)
-  const [userName, setUserName] = useState('')
-  const [error, setError] = useState('')
-  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
   const onSubmitForm = async (
     values: Omit<AuthT, 'rememberMe'>,
   ): Promise<handleResponseT> => {
-    debugger
     const res: AuthResponse = await userApi.register(values)
     if (typeof res === 'string') {
-      setError(res)
       return { error: res }
     }
-    setUserName(res.addedUser.name)
     return { name: res.addedUser.name }
   }
 
@@ -59,7 +48,6 @@ export const Auth: FC = () => {
       password: '',
     },
     onSubmit: (values: Omit<AuthT, 'rememberMe'>) => {
-      debugger
       onSubmitForm(values).then((res: handleResponseT) => {
         if (res?.name) {
           formik.resetForm()
@@ -68,6 +56,7 @@ export const Auth: FC = () => {
       })
     },
   })
+
   return (
     <FormWrapper onSubmit={formik.handleSubmit}>
       <InputsWrapper>

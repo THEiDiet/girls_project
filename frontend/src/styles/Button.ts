@@ -1,4 +1,4 @@
-import styled, { keyframes, css } from 'styled-components'
+import styled, { keyframes } from 'styled-components'
 
 import { ButtonT } from 'types'
 
@@ -8,7 +8,7 @@ const hover = keyframes`
   }
 
   100%{
-    transform: scale(1.1);
+    transform: scale(1.01);
   }
 `
 const active = keyframes`

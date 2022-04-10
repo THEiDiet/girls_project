@@ -5,7 +5,7 @@ import { Navigate } from 'react-router-dom'
 
 import { LoginAPI } from 'api/LoginAPI'
 import { useAppDispatch } from 'hooks/useAppDispatchAndSelector'
-import { login } from 'store/reducers/userReducer'
+import { setUserData } from 'store/reducers/userReducer'
 import { Button } from 'styles'
 
 const MIN_PASS_LENGTH = 7
@@ -41,18 +41,16 @@ export const Login = (): any => {
   const [userName, setUserName] = useState('')
   const [error, setError] = useState('')
   const dispatch = useAppDispatch()
-  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+
   const onSubmitForm = async (values: any): Promise<any> => {
     const res: any = await LoginAPI.login(values)
     if (typeof res === 'string') {
       setError(res)
       return { error: res }
     }
-    setUserName(res.email)
-    dispatch(login(res.name))
+    dispatch(setUserData(res))
     return { name: res.email }
   }
-
   const formik = useFormik({
     initialValues: {
       email: 'nya-admin@nya.nya',
@@ -86,11 +84,11 @@ export const Login = (): any => {
       })
     },
   })
+
   return (
     <div>
       <form onSubmit={formik.handleSubmit}>
         <div>
-          {/* eslint-disable-next-line react/jsx-props-no-spreading */}
           <input {...formik.getFieldProps('email')} />
           {formik.touched.email && formik.errors.email && (
             <div style={{ color: 'red' }}>{formik.errors.email}</div>
@@ -98,7 +96,6 @@ export const Login = (): any => {
         </div>
 
         <div>
-          {/* eslint-disable-next-line react/jsx-props-no-spreading */}
           <input {...formik.getFieldProps('password')} />
           {formik.touched.password && formik.errors.password && (
             <div style={{ color: 'red' }}>{formik.errors.password}</div>
@@ -108,7 +105,6 @@ export const Login = (): any => {
           <input
             type="checkbox"
             checked={formik.values.rememberMe}
-            // eslint-disable-next-line react/jsx-props-no-spreading
             {...formik.getFieldProps('rememberMe')}
           />
           remember me

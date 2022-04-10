@@ -1,3 +1,3 @@
 import React, { ReactElement } from 'react'
 
-export const MainPage = (): ReactElement => <div>MainPage</div>
+export const MainPage = (): ReactElement => <div>Packs</div>

@@ -5,11 +5,9 @@ import { Responses } from 'enums'
 import { AuthT } from 'types'
 
 export const userApi = {
-  // eslint-disable-next-line no-return-await
-  ping: async () => await instance.get('ping'),
   register: async (body: Omit<AuthT, 'rememberMe'>) => {
     try {
-      const res = await instance.post('auth/register', JSON.stringify(body))
+      const res = await instance.post('auth/register', body)
       if (res.status === Responses.Created) {
         return res.data
       }
@@ -18,26 +16,23 @@ export const userApi = {
       return (e as AxiosError)?.response?.data?.error || 'some error'
     }
   },
-  // eslint-disable-next-line no-return-await
   login: async (body: any) => {
     try {
-      const res = await instance.post('auth/login', JSON.stringify(body))
+      const res = await instance.post('auth/login', body)
       return res.data
     } catch (e) {
       return (e as AxiosError)?.response?.data?.error
     }
   },
-  // eslint-disable-next-line no-return-await
   me: async () => {
     try {
-      const res = await instance.post(await instance.post('auth/me', JSON.stringify({})))
+      const res = await instance.post('auth/me', {})
       return res.data
     } catch (e) {
       return (e as AxiosError)?.response?.data?.error
     }
   },
-  // eslint-disable-next-line no-return-await
-  update: async (body: any) => await instance.put('auth/me', JSON.stringify(body)),
+  update: (body: any) => instance.put('auth/me', body),
   forgot: async (email: string) => {
     const body = {
       email,
@@ -46,7 +41,7 @@ export const userApi = {
                 <a href='http://localhost:3000/#/set-new-password$token$'>link</a></div>`,
     }
     try {
-      const res = await instance.post('auth/forgot', JSON.stringify(body))
+      const res = await instance.post('auth/forgot', body)
       if (res.status === Responses.Success) {
         return res.data
       }
@@ -54,5 +49,9 @@ export const userApi = {
     } catch (e) {
       return (e as AxiosError)?.response?.data?.error
     }
+  },
+  logout: async () => {
+    const res = await instance.delete('auth/me')
+    console.log(res)
   },
 }
