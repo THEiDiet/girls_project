@@ -1,17 +1,21 @@
 import React, { FC } from 'react'
 
-import { useSelector } from 'react-redux'
-import { Navigate } from 'react-router-dom'
-
 // import { userApi } from '../../api'
-import { Button } from '../../components/common'
-import { RootState } from '../../store/config'
+import { userApi } from '../../api'
+import { useAppDispatch } from '../../hooks'
+import { authorize } from '../../store/reducers'
 import { Container, StyledHeader } from '../../styles/profileStyles'
+
+import { Button } from 'styles'
 
 // import user from './user.jpg'
 
 export const Profile: FC = () => {
-  const authMe = useSelector<RootState, boolean>(state => state.test.authMe)
+  const dispatch = useAppDispatch()
+  const logout = (): void => {
+    userApi.logout().then(res => dispatch(authorize(false)))
+  }
+  // const authMe = useSelector<RootState, boolean>(state => state.app.authMe)
   // const initializeApp = async () => {
   //   const res = await userApi.me({
   //     email: 'log@mail.ru',
@@ -20,9 +24,9 @@ export const Profile: FC = () => {
   //   })
   //   console.log(res)
   // }
-  if (!authMe) {
-    return <Navigate to="/login" />
-  }
+  // if (!authMe) {
+  //   return <Navigate to="/login" />
+  // }
   return (
     <StyledHeader>
       <Container>
@@ -30,7 +34,7 @@ export const Profile: FC = () => {
           {/* <img src={user} alt="userImg" width="100px" height="80px" /> */}
           <h3>User Name</h3>
           <p>Description</p>
-          <Button>Log out</Button>
+          <Button onClick={logout}>Log out</Button>
         </div>
         <div className="cardBox">
           <h1>Pack</h1>

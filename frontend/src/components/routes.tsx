@@ -1,40 +1,51 @@
-import React, { FC, ReactElement } from 'react'
+import React, { FC, ReactElement, useEffect } from 'react'
 
-import { useSelector } from 'react-redux'
-import { Route, Routes } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import { Navigate, Route, Routes, useNavigate } from 'react-router-dom'
 
 import { Paths } from '../enums'
-import { RootState } from '../store/config'
+import { useAppSelector } from '../hooks'
+import { initialization } from '../store/thunks/appThunks'
 
+import Spinner from './common/spinner/Spinner'
 import { Header } from './header/Header'
 
-import {
-  Auth,
-  MainPage,
-  Login,
-  Profile,
-  TestComponent,
-  RestorePassword,
-  ChangePassword,
-  NotFound,
-} from 'pages'
+import { Auth, Login, MainPage, NotFound, Profile, RestorePassword } from 'pages'
 
 export const Router: FC = (): ReactElement => {
-  const isInitialized = useSelector<RootState, boolean>(state => state.test.isInitialized)
+  const dispatch = useDispatch()
+  const isAuthorized = useAppSelector(state => state.app.isAuthorized)
+  const isInitialized = useAppSelector(state => state.app.isInitialized)
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    dispatch(initialization())
+  }, [])
+
+  useEffect(() => {
+    if (isInitialized && !isAuthorized) {
+      navigate(Paths.Login)
+    }
+  }, [isAuthorized])
 
   if (!isInitialized) {
-    return <h2>Loading...</h2>
+    return <Spinner />
   }
+
   return (
     <Routes>
       <Route path={Paths.Home} element={<Header />}>
         <Route index element={<MainPage />} />
-        <Route path={Paths.Auth} element={<Auth />} />
-        <Route path={Paths.Login} element={<Login />} />
-        <Route path={Paths.ChangePassword} element={<ChangePassword />} />
+        <Route
+          path={Paths.Auth}
+          element={isAuthorized ? <Navigate to={Paths.Home} /> : <Auth />}
+        />
+        <Route
+          path={Paths.Login}
+          element={isAuthorized ? <Navigate to={Paths.Home} /> : <Login />}
+        />
         <Route path={Paths.RestorePassword} element={<RestorePassword />} />
         <Route path={Paths.Profile} element={<Profile />} />
-        <Route path={Paths.Test} element={<TestComponent />} />
         <Route path={Paths.NotFound} element={<NotFound />} />
       </Route>
     </Routes>

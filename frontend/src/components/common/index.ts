@@ -1,1 +1,3 @@
-export { Button } from 'components/common/button/Button'
+export default (): void => {
+  console.log('a')
+}

@@ -4,15 +4,45 @@ import { instance } from 'api/config'
 import { Responses } from 'enums'
 import { AuthT } from 'types'
 
-const Responses = 201
 export const userApi = {
-  // eslint-disable-next-line no-return-await
-  ping: async () => await instance.get('ping'),
-  register: async (body: any) => {
-    // eslint-disable-next-line no-return-await
+  register: async (body: Omit<AuthT, 'rememberMe'>) => {
     try {
-      const res = await instance.post('auth/register', JSON.stringify(body))
-      if (res.status === Responses) {
+      const res = await instance.post('auth/register', body)
+      if (res.status === Responses.Created) {
+        return res.data
+      }
+      return res.data
+    } catch (e) {
+      return (e as AxiosError)?.response?.data?.error || 'some error'
+    }
+  },
+  login: async (body: any) => {
+    try {
+      const res = await instance.post('auth/login', body)
+      return res.data
+    } catch (e) {
+      return (e as AxiosError)?.response?.data?.error
+    }
+  },
+  me: async () => {
+    try {
+      const res = await instance.post('auth/me', {})
+      return res.data
+    } catch (e) {
+      return (e as AxiosError)?.response?.data?.error
+    }
+  },
+  update: (body: any) => instance.put('auth/me', body),
+  forgot: async (email: string) => {
+    const body = {
+      email,
+      from: 'alex96kravets@gmail.com',
+      message: `<div style='background-color: lime; padding: 15px'>password recovery link: 
+                <a href='http://localhost:3000/#/set-new-password$token$'>link</a></div>`,
+    }
+    try {
+      const res = await instance.post('auth/forgot', body)
+      if (res.status === Responses.Success) {
         return res.data
       }
       return res.data
@@ -20,24 +50,8 @@ export const userApi = {
       return (e as AxiosError)?.response?.data?.error
     }
   },
-  // eslint-disable-next-line no-return-await
-  login: async (body: any) => {
-    try {
-      const res = await instance.post('auth/login', JSON.stringify(body))
-      return res.data
-    } catch (e) {
-      return (e as AxiosError)?.response?.data?.error
-    }
+  logout: async () => {
+    const res = await instance.delete('auth/me')
+    console.log(res)
   },
-  // eslint-disable-next-line no-return-await
-  me: async () => {
-    try {
-      const res = await instance.post(await instance.post('auth/me', JSON.stringify({})))
-      return res.data
-    } catch (e) {
-      return (e as AxiosError)?.response?.data?.error
-    }
-  },
-  // eslint-disable-next-line no-return-await
-  update: async (body: any) => await instance.put('auth/me', JSON.stringify(body)),
 }

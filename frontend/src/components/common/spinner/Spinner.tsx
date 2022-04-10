@@ -1,10 +1,8 @@
-/* eslint-disable */
+import React, { FC } from 'react'
 
-import React from 'react'
+import spinner from 'assets/spinner.gif'
 
-import spinner from './spinner.gif'
-
-const Spinner = () => (
+const Spinner: FC = () => (
   <img
     src={spinner}
     alt="Loading..."

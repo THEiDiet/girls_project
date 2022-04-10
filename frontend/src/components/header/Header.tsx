@@ -1,27 +1,48 @@
-import React, { ReactElement } from 'react'
+import React, { ReactElement, useEffect, useState } from 'react'
 
-import { Link, Outlet } from 'react-router-dom'
+import { Outlet } from 'react-router-dom'
+
+import { useAppSelector } from '../../hooks'
+import HeaderLink from '../common/HeaderLink'
 
 import { Paths } from 'enums'
-import { StyledHeader, Main, Container } from 'styles'
+import { Container, Main, StyledHeader } from 'styles'
 
-export const Header = (): ReactElement => (
-  <>
-    <StyledHeader>
-      <Container>
-        <Link to={Paths.Home}>Home page</Link>
-        <Link to={Paths.Profile}>Profile</Link>
-        <Link to={Paths.Auth}>Auth</Link>
-        <Link to={Paths.Login}>Login</Link>
-        <Link to={Paths.RestorePassword}>Restore Password</Link>
-        <Link to={Paths.ChangePassword}>Change Password</Link>
-        <Link to={Paths.Test}>Test</Link>
-      </Container>
-    </StyledHeader>
-    <Main>
-      <Container>
-        <Outlet />
-      </Container>
-    </Main>
-  </>
-)
+const linksArrayAuthorized = [
+  { path: Paths.Home, name: 'Packs' },
+  { path: Paths.Profile, name: 'Profile' },
+  { path: Paths.RestorePassword, name: 'Restore Pass' },
+]
+const linksArrayUnAuthorized = [
+  { path: Paths.Auth, name: 'Auth' },
+  { path: Paths.Login, name: 'Login' },
+]
+
+export const Header = (): ReactElement => {
+  const isAuthorized = useAppSelector(state => state.app.isAuthorized)
+  const [links, setLinks] = useState(linksArrayUnAuthorized)
+  useEffect(() => {
+    if (isAuthorized) {
+      setLinks(linksArrayAuthorized)
+    }
+    if (!isAuthorized) {
+      setLinks(linksArrayUnAuthorized)
+    }
+  }, [isAuthorized])
+  return (
+    <>
+      <StyledHeader>
+        <Container>
+          {links.map(link => (
+            <HeaderLink path={link.path} title={link.name} key={link.name} />
+          ))}
+        </Container>
+      </StyledHeader>
+      <Main>
+        <Container>
+          <Outlet />
+        </Container>
+      </Main>
+    </>
+  )
+}
