@@ -1,29 +1,43 @@
-import React from 'react'
+import React, { FC, useState } from 'react'
 
+import { ReactComponent as IconSecured } from 'assets/icons/closed.svg'
+import { ReactComponent as IconInSecured } from 'assets/icons/opened.svg'
+import { StyledInput, InputWithLabel, InputError, IconButton, Label } from 'styles'
 import { InputPropsType } from 'types/inputT'
 
-export const CustomInput: React.FC<InputPropsType> = props => {
-  const { label, onClick, icon, type, id, name, onChange, value, ...rest } = props
+export const Input: FC<InputPropsType> = props => {
+  const {
+    label,
+    id,
+    name,
+    onChange,
+    value,
+    error,
+    showSecure,
+    fullWidth = false,
+    ...rest
+  } = props
+  const [isSecured, setIsSecured] = useState(showSecure)
   return (
-    <div>
-      <label htmlFor={name}>{label}</label>
-      <div>
-        <input
-          required
-          id={id}
-          name={name}
-          type={type}
-          onChange={onChange}
-          value={value}
-          onBlur={rest.onBlur}
-        />
-        {icon && (
-          // eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions
-          <span onClick={onClick}>
-            <img src={icon} alt="Button for show/close password" />
-          </span>
-        )}
-      </div>
-    </div>
+    <InputWithLabel>
+      <Label htmlFor={name}>{label}</Label>
+      <StyledInput
+        required
+        id={id}
+        name={name}
+        type={isSecured ? 'password' : ''}
+        onChange={onChange}
+        value={value}
+        onBlur={rest.onBlur}
+        padding="2rem"
+        fullWidth={fullWidth}
+      />
+      {showSecure && (
+        <IconButton type="button" onClick={() => setIsSecured(!isSecured)}>
+          {isSecured ? <IconSecured /> : <IconInSecured />}
+        </IconButton>
+      )}
+      {error && <InputError>{error}</InputError>}
+    </InputWithLabel>
   )
 }

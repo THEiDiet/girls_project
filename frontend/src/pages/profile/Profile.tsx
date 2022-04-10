@@ -4,9 +4,10 @@ import { useSelector } from 'react-redux'
 import { Navigate } from 'react-router-dom'
 
 // import { userApi } from '../../api'
-import { Button } from '../../components/common'
 import { RootState } from '../../store/config'
 import { Container, StyledHeader } from '../../styles/profileStyles'
+
+import { Button } from 'styles'
 
 // import user from './user.jpg'
 

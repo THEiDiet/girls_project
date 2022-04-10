@@ -3,11 +3,10 @@ import React, { useState } from 'react'
 import { useFormik } from 'formik'
 import { Navigate } from 'react-router-dom'
 
-import { Button } from '../../components/common'
-
 import { LoginAPI } from 'api/LoginAPI'
 import { useAppDispatch } from 'hooks/useAppDispatchAndSelector'
 import { login } from 'store/reducers/userReducer'
+import { Button } from 'styles'
 
 const MIN_PASS_LENGTH = 7
 

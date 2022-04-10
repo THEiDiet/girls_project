@@ -13,7 +13,6 @@ import {
   MainPage,
   Login,
   Profile,
-  TestComponent,
   RestorePassword,
   ChangePassword,
   NotFound,
@@ -34,7 +33,6 @@ export const Router: FC = (): ReactElement => {
         <Route path={Paths.ChangePassword} element={<ChangePassword />} />
         <Route path={Paths.RestorePassword} element={<RestorePassword />} />
         <Route path={Paths.Profile} element={<Profile />} />
-        <Route path={Paths.Test} element={<TestComponent />} />
         <Route path={Paths.NotFound} element={<NotFound />} />
       </Route>
     </Routes>

@@ -2,8 +2,8 @@
 import React, { ChangeEvent, FC, useState } from 'react'
 
 import { userApi } from 'api/userApi'
-import { CustomInput } from 'components/common/input/Input'
-import { Button } from 'components/common/button/Button'
+import { Input } from 'components/common/input/Input'
+import { Button, FormWrapper, InputsWrapper } from 'styles'
 import { useLoader } from 'hooks/useLoader'
 
 const MIN_EMAIL_LENGTH = 6
@@ -22,25 +22,25 @@ export const RestorePassword: FC = () => {
     if(email && email.length > MIN_EMAIL_LENGTH){
       startFetching()
       const res = await userApi.forgot('log.m3.baby@gmail.com')
-      if(typeof res === 'string'){
-        setError(res)
-      } else setResponse(res)
+      setResponse(res.info)
       stopFetching()
     }
   }
 
   return (
-    <div>
-      <CustomInput
-        name="email"
-        label="Email"
-        type="text"
-        onChange={handleChange}
-        value={email}
-      />
+    <FormWrapper>
+      <InputsWrapper>
+        <Input
+            name="email"
+            label="Email"
+            onChange={handleChange}
+            value={email}
+            fullWidth
+        />
+      </InputsWrapper>
       <Button onClick={restorePassword}>Restore</Button>
       {isFetching && <span>Loading...</span>}
       {error || response}
-    </div>
+    </FormWrapper>
   )
 }

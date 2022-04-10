@@ -1,1 +1,5 @@
-export default () => {}
+export {
+  validatePassword,
+  validatePassAndEmail,
+  validateEmail,
+} from './validateEmailAndPass'

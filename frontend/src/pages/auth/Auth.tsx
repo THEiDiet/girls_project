@@ -3,10 +3,12 @@ import React, { FC, useState } from 'react'
 import { useFormik } from 'formik'
 import { NavLink } from 'react-router-dom'
 
+import { validatePassAndEmail } from '../../utils'
+
 import { userApi } from 'api/userApi'
-import { Button } from 'components/common/button/Button'
-import { CustomInput } from 'components/common/input/Input'
+import { Input } from 'components/common/input/Input'
 import { Paths } from 'enums/Paths'
+import { FormWrapper, Button, InputsWrapper } from 'styles'
 import { AuthT } from 'types/UserType'
 
 const MIN_PASS_LENGTH = 7
@@ -40,6 +42,7 @@ export const Auth: FC = () => {
   const onSubmitForm = async (
     values: Omit<AuthT, 'rememberMe'>,
   ): Promise<handleResponseT> => {
+    debugger
     const res: AuthResponse = await userApi.register(values)
     if (typeof res === 'string') {
       setError(res)
@@ -50,25 +53,13 @@ export const Auth: FC = () => {
   }
 
   const formik = useFormik({
-    validate: values => {
-      const errors = {} as Omit<AuthT, 'rememberMe'>
-      if (!values.email) {
-        errors.email = 'Email is required'
-      } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
-        errors.email = 'Invalid email address'
-      }
-      if (values.password.length < MIN_PASS_LENGTH) {
-        errors.password = 'Password must be more than 7 symbols'
-      } else if (!values.password) {
-        errors.password = 'Password is required'
-      }
-      return errors
-    },
+    validate: validatePassAndEmail,
     initialValues: {
       email: '',
       password: '',
     },
     onSubmit: (values: Omit<AuthT, 'rememberMe'>) => {
+      debugger
       onSubmitForm(values).then((res: handleResponseT) => {
         if (res?.name) {
           formik.resetForm()
@@ -77,50 +68,34 @@ export const Auth: FC = () => {
       })
     },
   })
-
   return (
-    <form onSubmit={formik.handleSubmit}>
-      <div>
-        <CustomInput
+    <FormWrapper onSubmit={formik.handleSubmit}>
+      <InputsWrapper>
+        <Input
           name="email"
-          type="text"
           label="Email"
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
           value={formik.values.email}
+          error={formik.touched.email ? formik.errors.email : ''}
+          fullWidth
         />
-        {formik.touched.email && formik.errors.email}
-      </div>
-      <div>
-        {isSecurity ? (
-          <CustomInput
-            name="password"
-            label="Password"
-            id="password"
-            type="text"
-            onBlur={formik.handleBlur}
-            onChange={formik.handleChange}
-            value={formik.values.password}
-            // icon={Security}
-            // onClick={changeSecurity}
-          />
-        ) : (
-          <CustomInput
-            name="password"
-            id="password"
-            label="Password"
-            type="password"
-            onBlur={formik.handleBlur}
-            value={formik.values.password}
-            // icon={unSecurity}
-            onChange={formik.handleChange}
-            // onClick={changeSecurity}
-          />
-        )}
-        {formik.touched.password && formik.errors.password}
-      </div>
-      <Button type="submit">Auth</Button>
-      <span>{userName}</span>
-    </form>
+        <Input
+          name="password"
+          id="password"
+          label="Password"
+          type="password"
+          onBlur={formik.handleBlur}
+          value={formik.values.password}
+          onChange={formik.handleChange}
+          error={formik.touched.password ? formik.errors.password : ''}
+          showSecure
+          fullWidth
+        />
+      </InputsWrapper>
+      <Button fullWidth mb="0" type="submit">
+        Auth
+      </Button>
+    </FormWrapper>
   )
 }
