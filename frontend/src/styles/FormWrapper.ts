@@ -10,5 +10,6 @@ export const FormWrapper = styled.form`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  align-items: center;
   box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.2);
 `
