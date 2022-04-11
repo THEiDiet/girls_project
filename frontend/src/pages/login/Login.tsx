@@ -2,11 +2,14 @@ import React, { useState } from 'react'
 
 import { useFormik } from 'formik'
 import { Navigate } from 'react-router-dom'
+
 // import { setUserData } from 'store/reducers/userReducer'
+import { CheckBox } from '../../components/common/checkbox/CheckBox'
+import { Paths } from '../../enums'
 
 import { LoginAPI } from 'api/LoginAPI'
 import { useAppDispatch } from 'hooks/useAppDispatchAndSelector'
-import { Button } from 'styles'
+import { Button, FormWrapper, LinkStyle, Flex, HelpText } from 'styles'
 
 const MIN_PASS_LENGTH = 7
 
@@ -84,33 +87,39 @@ export const Login = (): any => {
       })
     },
   })
-
   return (
-    <div>
+    <FormWrapper>
       <form onSubmit={formik.handleSubmit}>
-        <div>
-          <input {...formik.getFieldProps('email')} />
-          {formik.touched.email && formik.errors.email && (
-            <div style={{ color: 'red' }}>{formik.errors.email}</div>
-          )}
-        </div>
-
-        <div>
-          <input {...formik.getFieldProps('password')} />
-          {formik.touched.password && formik.errors.password && (
-            <div style={{ color: 'red' }}>{formik.errors.password}</div>
-          )}
-        </div>
-        <div>
-          <input
-            type="checkbox"
-            checked={formik.values.rememberMe}
+        <Flex
+          margin="50px 0 0 0"
+          flex-direction="row"
+          align-items="center"
+          justify-content="space-between"
+        >
+          <div>
+            <input {...formik.getFieldProps('email')} />
+            {formik.touched.email && formik.errors.email && (
+              <div style={{ color: 'red' }}>{formik.errors.email}</div>
+            )}
+          </div>
+          <div>
+            <input {...formik.getFieldProps('password')} />
+            {formik.touched.password && formik.errors.password && (
+              <div style={{ color: 'red' }}>{formik.errors.password}</div>
+            )}
+          </div>
+          <CheckBox
             {...formik.getFieldProps('rememberMe')}
+            labelTitle="Remember me:"
+            type="checkbox"
+            autoComplete="on"
           />
-          remember me
-        </div>
-        <Button type="submit">sign in</Button>
+          <Button type="submit">sign in</Button>
+          <LinkStyle to={Paths.RestorePassword}>Forgot Password</LinkStyle>
+          <HelpText>Do not have an account?</HelpText>
+          <LinkStyle to={Paths.Auth}>Sign Up</LinkStyle>
+        </Flex>
       </form>
-    </div>
+    </FormWrapper>
   )
 }
