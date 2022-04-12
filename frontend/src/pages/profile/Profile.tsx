@@ -1,9 +1,9 @@
 import React, { FC } from 'react'
 
-import { Container, StyledHeader } from '../../styles/profileStyles'
+import { ModalError } from '../../components/modalError/ModalError'
+import { Container, StyledHeader } from '../../styles/ProfileStyled'
 
 export const Profile: FC = () => (
-  // const dispatch = useAppDispatch()
   <StyledHeader>
     <Container>
       <div className="profileSection">
@@ -15,6 +15,7 @@ export const Profile: FC = () => (
         <h1>Pack</h1>
         <h2>Number of card</h2>
         <p>1-100</p>
+        <ModalError />
       </div>
     </Container>
   </StyledHeader>
