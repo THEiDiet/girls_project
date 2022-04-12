@@ -6,9 +6,10 @@ export const Checkmark = styled.div`
   left: 0;
   height: 1.3em;
   width: 1.3em;
-  background-color: #ccc;
+  background-color: #DDE9EC;
   transition: all 0.3s;
   border-radius: 2px;
+  margin-bottom: 10px;
 
   &:after {
     left: 0.45em;
@@ -17,7 +18,7 @@ export const Checkmark = styled.div`
     height: 0.5em;
     border: solid white;
     border-width: 0 0.15em 0.15em 0;
-    transform: rotate(45deg);
+    transform: rotate(45deg);   
   }
 
   &:after {
@@ -34,7 +35,7 @@ export const Input = styled.input`
     display: block;
   }
   &:checked ~ ${Checkmark} {
-    background-color: ${({ theme: { mainColor } }) => mainColor};
+    background-color: #365A67;
     animation: pop 0.5s;
     animation-direction: alternate;
   }

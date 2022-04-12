@@ -3,7 +3,7 @@ import styled from 'styled-components'
 export const StyledHeader = styled.header`
   width: 100%;
   height: 60px;
-  background: #365A67;
+  background: #365a67;
   position: fixed;
   top: 0;
   left: 0;
@@ -28,4 +28,8 @@ export const Main = styled.main`
   top: 60px;
   left: 0;
   background: #dde9ec;
+`
+
+export const HeaderButton = styled.button`
+  background: red;
 `

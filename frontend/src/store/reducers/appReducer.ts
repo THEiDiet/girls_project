@@ -15,9 +15,12 @@ const testSlice = createSlice({
     initialize: (state, action: PayloadAction<boolean>) => {
       state.isInitialized = action.payload
     },
+    authLogout: (state, action: PayloadAction<boolean>) => {
+      state.isAuthorized = action.payload
+    },
   },
 })
-export const { authorize, initialize } = testSlice.actions
+export const { authorize, initialize, authLogout } = testSlice.actions
 export const appReducer = testSlice.reducer
 
 // @ts-ignore

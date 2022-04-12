@@ -1,15 +1,16 @@
 import React, { useState } from 'react'
 
 import { useFormik } from 'formik'
-import { Navigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
-// import { setUserData } from 'store/reducers/userReducer'
 import { CheckBox } from '../../components/common/checkbox/CheckBox'
 import { Paths } from '../../enums'
+import { setUserData } from '../../store/reducers/userReducer'
 
 import { LoginAPI } from 'api/LoginAPI'
+import { Input } from 'components/common/input/Input'
 import { useAppDispatch } from 'hooks/useAppDispatchAndSelector'
-import { Button, FormWrapper, LinkStyle, Flex, HelpText } from 'styles'
+import { Button, FormWrapper, LinkStyle, InputsWrapper, HelpText } from 'styles'
 
 const MIN_PASS_LENGTH = 7
 
@@ -44,6 +45,7 @@ export const Login = (): any => {
   const [userName, setUserName] = useState('')
   const [error, setError] = useState('')
   const dispatch = useAppDispatch()
+  const navigate = useNavigate()
 
   const onSubmitForm = async (values: any): Promise<any> => {
     const res: any = await LoginAPI.login(values)
@@ -51,7 +53,7 @@ export const Login = (): any => {
       setError(res)
       return { error: res }
     }
-    // dispatch(setUserData(res))
+    dispatch(setUserData(res.email))
     return { name: res.email }
   }
   const formik = useFormik({
@@ -67,7 +69,6 @@ export const Login = (): any => {
       } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
         errors.email = 'Invalid email address'
       }
-
       if (!values.password) {
         errors.password = 'Required'
       } else if (values.password.length < MIN_PASS_LENGTH) {
@@ -76,50 +77,59 @@ export const Login = (): any => {
       return errors
     },
     onSubmit: values => {
+      console.log(values)
+      // dispatch(setUserData(values))
       // eslint-disable-next-line consistent-return
       onSubmitForm(values).then(res => {
         if (res?.email) {
           formik.resetForm()
           console.log('hello', res?.email)
-          return <Navigate to="/profile" />
+          navigate(Paths.Profile)
         }
         console.log(res?.error || 'Something went wrong')
       })
     },
   })
   return (
-    <FormWrapper>
-      <form onSubmit={formik.handleSubmit}>
-        <Flex
-          margin="50px 0 0 0"
-          flex-direction="row"
-          align-items="center"
-          justify-content="space-between"
-        >
-          <div>
-            <input {...formik.getFieldProps('email')} />
-            {formik.touched.email && formik.errors.email && (
-              <div style={{ color: 'red' }}>{formik.errors.email}</div>
-            )}
-          </div>
-          <div>
-            <input {...formik.getFieldProps('password')} />
-            {formik.touched.password && formik.errors.password && (
-              <div style={{ color: 'red' }}>{formik.errors.password}</div>
-            )}
-          </div>
-          <CheckBox
-            {...formik.getFieldProps('rememberMe')}
-            labelTitle="Remember me:"
-            type="checkbox"
-            autoComplete="on"
-          />
-          <Button type="submit">sign in</Button>
-          <LinkStyle to={Paths.RestorePassword}>Forgot Password</LinkStyle>
-          <HelpText>Do not have an account?</HelpText>
-          <LinkStyle to={Paths.Auth}>Sign Up</LinkStyle>
-        </Flex>
-      </form>
+    <FormWrapper onSubmit={formik.handleSubmit}>
+      <InputsWrapper>
+        <Input
+          name="email"
+          label="Email"
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          value={formik.values.email}
+          error={formik.touched.email ? formik.errors.email : ''}
+          fullWidth
+        />
+        <Input
+          name="password"
+          id="password"
+          label="Password"
+          type="password"
+          onBlur={formik.handleBlur}
+          value={formik.values.password}
+          onChange={formik.handleChange}
+          error={formik.touched.password ? formik.errors.password : ''}
+          showSecure
+          fullWidth
+        />
+      </InputsWrapper>
+      <CheckBox
+        {...formik.getFieldProps('rememberMe')}
+        labelTitle="Remember me:"
+        type="checkbox"
+        autoComplete="on"
+      />
+      <Button fullWidth mb="0" type="submit">
+        Sign in
+      </Button>
+      <LinkStyle to={Paths.RestorePassword}>Forgot Password</LinkStyle>
+      <HelpText>Do not have an account?</HelpText>
+      <Button fullWidth mb="0" type="submit" onClick={() => navigate(Paths.Auth)}>
+        Sign up
+      </Button>
+      {/* </Flex> */}
     </FormWrapper>
   )
 }
