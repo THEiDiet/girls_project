@@ -5,11 +5,10 @@ import { Outlet } from 'react-router-dom'
 
 import { useAppSelector } from '../../hooks'
 import { logOutTC } from '../../store/thunks/appThunks'
-import { HeaderButton } from '../../styles/headerStyles'
 import HeaderLink from '../common/HeaderLink'
 
 import { Paths } from 'enums'
-import { Container, Main, StyledHeader } from 'styles'
+import { Container, Main, StyledHeader, Button } from 'styles'
 
 const linksArrayAuthorized = [
   { path: Paths.Home, name: 'Packs' },
@@ -45,7 +44,7 @@ export const Header = (): ReactElement => {
           {links.map(link => (
             <HeaderLink path={link.path} title={link.name} key={link.name} />
           ))}
-          {isAuthorized && <HeaderButton onClick={logOut}>Log Out</HeaderButton>}
+          {isAuthorized && <Button onClick={logOut}>Log Out</Button>}
         </Container>
       </StyledHeader>
 
