@@ -10,5 +10,6 @@ type LoginT = {
 export const loginT =
   ({ email, password }: LoginT) =>
   (dispatch: Dispatch) => {
+    debugger
     console.log(email, password)
   }
