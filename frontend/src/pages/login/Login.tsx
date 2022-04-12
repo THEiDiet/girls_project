@@ -129,7 +129,6 @@ export const Login = (): any => {
       <Button fullWidth mb="0" type="submit" onClick={() => navigate(Paths.Auth)}>
         Sign up
       </Button>
-      {/* </Flex> */}
     </FormWrapper>
   )
 }

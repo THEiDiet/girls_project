@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 const initialState = {
+  errorMessage: "Let me think",
   isAuthorized: false,
   isInitialized: false,
   isFetching: false,
