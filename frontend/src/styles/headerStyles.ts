@@ -29,7 +29,3 @@ export const Main = styled.main`
   left: 0;
   background: #dde9ec;
 `
-
-export const HeaderButton = styled.button`
-  background: red;
-`

@@ -1,22 +1,33 @@
 import React, { FC } from 'react'
 
-import { ModalError } from '../../components/modalError/ModalError'
-import { Container, StyledHeader } from '../../styles/ProfileStyled'
+import { useNavigate } from 'react-router-dom'
 
-export const Profile: FC = () => (
-  <StyledHeader>
-    <Container>
-      <div className="profileSection">
-        <img src="#" alt="userImg" width="100px" height="80px" />
-        <h3>User Name</h3>
-        <p>Description</p>
-      </div>
-      <div className="cardBox">
-        <h1>Pack</h1>
-        <h2>Number of card</h2>
-        <p>1-100</p>
+import { ModalError } from '../../components/modalError/ModalError'
+import { Paths } from '../../enums'
+import { useAppSelector } from '../../hooks'
+
+import { StyledProfile, StyledUserImg } from 'styles'
+
+export const Profile: FC = () => {
+  const navigate = useNavigate()
+  // const isAuthorized = useAppSelector(state => state.app.isAuthorized)
+  const isAuthorized = useAppSelector(state => state.app.isAuthorized)
+  const name = useAppSelector(state => state.user.user)
+
+  if (!isAuthorized) {
+    navigate(Paths.Login)
+  }
+
+  return (
+    <StyledProfile>
+      <h1>Profile</h1>
+      <StyledUserImg src={name.avatar} alt="user-avatar" />
+      <h2>{name.name}</h2>
+      <h3>Number of card</h3>
+      <p>1-100</p>
+      <div>
         <ModalError />
       </div>
-    </Container>
-  </StyledHeader>
-)
+    </StyledProfile>
+  )
+}
