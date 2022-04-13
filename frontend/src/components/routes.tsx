@@ -7,8 +7,8 @@ import { Paths } from '../enums'
 import { useAppSelector } from '../hooks'
 import { initialization } from '../store/thunks/appThunks'
 
-import Spinner from './common/spinner/Spinner'
 import { Header } from './header/Header'
+import Spinner from './spinner/Spinner'
 
 import { Auth, Login, MainPage, NotFound, Profile, RestorePassword } from 'pages'
 

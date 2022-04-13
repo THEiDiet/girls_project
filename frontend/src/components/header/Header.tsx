@@ -1,12 +1,14 @@
 import React, { ReactElement, useEffect, useState } from 'react'
 
+import { useDispatch } from 'react-redux'
 import { Outlet } from 'react-router-dom'
 
 import { useAppSelector } from '../../hooks'
+import { logOutTC } from '../../store/thunks/appThunks'
 import HeaderLink from '../common/HeaderLink'
 
 import { Paths } from 'enums'
-import { Container, Main, StyledHeader } from 'styles'
+import { Container, Main, StyledHeader, Button } from 'styles'
 
 const linksArrayAuthorized = [
   { path: Paths.Home, name: 'Packs' },
@@ -21,6 +23,7 @@ const linksArrayUnAuthorized = [
 export const Header = (): ReactElement => {
   const isAuthorized = useAppSelector(state => state.app.isAuthorized)
   const [links, setLinks] = useState(linksArrayUnAuthorized)
+  const dispatch = useDispatch()
   useEffect(() => {
     if (isAuthorized) {
       setLinks(linksArrayAuthorized)
@@ -29,6 +32,11 @@ export const Header = (): ReactElement => {
       setLinks(linksArrayUnAuthorized)
     }
   }, [isAuthorized])
+
+  const logOut = (): void => {
+    dispatch(logOutTC())
+  }
+
   return (
     <>
       <StyledHeader>
@@ -36,8 +44,10 @@ export const Header = (): ReactElement => {
           {links.map(link => (
             <HeaderLink path={link.path} title={link.name} key={link.name} />
           ))}
+          {isAuthorized && <Button onClick={logOut}>Log Out</Button>}
         </Container>
       </StyledHeader>
+
       <Main>
         <Container>
           <Outlet />

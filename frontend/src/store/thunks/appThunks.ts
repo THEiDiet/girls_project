@@ -1,8 +1,8 @@
 import { AppDispatch } from '../config'
 
 import { userApi } from 'api'
-import { authorize, initialize } from 'store/reducers/appReducer'
-import { setUserData } from 'store/reducers/userReducer'
+import { authLogout, authorize, initialize } from 'store/reducers/appReducer'
+import { logOutAC, setUserData } from 'store/reducers/userReducer'
 import { UserInfoT } from 'types'
 
 export const initialization = () => (dispatch: AppDispatch) => {
@@ -14,5 +14,11 @@ export const initialization = () => (dispatch: AppDispatch) => {
       dispatch(authorize(true))
       dispatch(setUserData(res))
     }
+  })
+}
+export const logOutTC = () => (dispatch: AppDispatch) => {
+  userApi.logout().then(res => {
+    dispatch(authLogout(false))
+    dispatch(logOutAC())
   })
 }

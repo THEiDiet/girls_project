@@ -1,47 +1,33 @@
 import React, { FC } from 'react'
 
-// import { userApi } from '../../api'
-import { userApi } from '../../api'
-import { useAppDispatch } from '../../hooks'
-import { authorize } from '../../store/reducers'
-import { Container, StyledHeader } from '../../styles/profileStyles'
+import { useNavigate } from 'react-router-dom'
 
-import { Button } from 'styles'
+import { ModalError } from '../../components/modalError/ModalError'
+import { Paths } from '../../enums'
+import { useAppSelector } from '../../hooks'
 
-// import user from './user.jpg'
+import { StyledProfile, StyledUserImg } from 'styles'
 
 export const Profile: FC = () => {
-  const dispatch = useAppDispatch()
-  const logout = (): void => {
-    userApi.logout().then(res => dispatch(authorize(false)))
+  const navigate = useNavigate()
+  // const isAuthorized = useAppSelector(state => state.app.isAuthorized)
+  const isAuthorized = useAppSelector(state => state.app.isAuthorized)
+  const name = useAppSelector(state => state.user.user)
+
+  if (!isAuthorized) {
+    navigate(Paths.Login)
   }
-  // const authMe = useSelector<RootState, boolean>(state => state.app.authMe)
-  // const initializeApp = async () => {
-  //   const res = await userApi.me({
-  //     email: 'log@mail.ru',
-  //     password: '123456789',
-  //     rememberMe: true,
-  //   })
-  //   console.log(res)
-  // }
-  // if (!authMe) {
-  //   return <Navigate to="/login" />
-  // }
+
   return (
-    <StyledHeader>
-      <Container>
-        <div className="profileSection">
-          {/* <img src={user} alt="userImg" width="100px" height="80px" /> */}
-          <h3>User Name</h3>
-          <p>Description</p>
-          <Button onClick={logout}>Log out</Button>
-        </div>
-        <div className="cardBox">
-          <h1>Pack</h1>
-          <h2>Number of card</h2>
-          <p>1-100</p>
-        </div>
-      </Container>
-    </StyledHeader>
+    <StyledProfile>
+      <h1>Profile</h1>
+      <StyledUserImg src={name.avatar} alt="user-avatar" />
+      <h2>{name.name}</h2>
+      <h3>Number of card</h3>
+      <p>1-100</p>
+      <div>
+        <ModalError />
+      </div>
+    </StyledProfile>
   )
 }
