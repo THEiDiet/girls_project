@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-export const ModalErrorWrapper = styled.div`
+export const SnackbarErrorWrapper = styled.div`
   background: red;
   position: fixed;
   width: 400px;
