@@ -54,4 +54,8 @@ export const userApi = {
     const res = await instance.delete('auth/me')
     console.log(res)
   },
+  getCards() {
+   return instance.get('cards/pack')
+  }
+
 }

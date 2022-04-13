@@ -2,11 +2,10 @@ import React, { FC, useState } from 'react'
 
 import { useDispatch } from 'react-redux'
 
-import { useAppSelector } from '../../hooks'
+import { useAppSelector } from 'hooks'
+import { SnackbarErrorWrapper, ButtonCloseModal, Flex } from 'styles'
 
-import { ModalErrorWrapper, ButtonCloseModal, Flex } from 'styles'
-
-export const ModalError: FC = () => {
+export const Snackbar: FC = () => {
   const dispatch = useDispatch()
 
   const error = useAppSelector(state => state.app.errorMessage)
@@ -17,11 +16,11 @@ export const ModalError: FC = () => {
   }
 
   return (
-    <ModalErrorWrapper>
+    <SnackbarErrorWrapper>
       <Flex align-items="center">{error}</Flex>
       <Flex alignSelf="self-start">
         <ButtonCloseModal onClick={closeModal}>X</ButtonCloseModal>
       </Flex>
-    </ModalErrorWrapper>
+    </SnackbarErrorWrapper>
   )
 }

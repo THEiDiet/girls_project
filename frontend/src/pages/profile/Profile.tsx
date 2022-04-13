@@ -2,10 +2,10 @@ import React, { FC } from 'react'
 
 import { useNavigate } from 'react-router-dom'
 
-import { ModalError } from '../../components/modalError/ModalError'
-import { Paths } from '../../enums'
-import { useAppSelector } from '../../hooks'
-
+import { Snackbar } from 'components/snackbar/Snackbar'
+import { Paths } from 'enums'
+import { useAppSelector } from 'hooks'
+import { CardList } from 'pages/cardList/CardList'
 import { StyledProfile, StyledUserImg } from 'styles'
 
 export const Profile: FC = () => {
@@ -26,7 +26,10 @@ export const Profile: FC = () => {
       <h3>Number of card</h3>
       <p>1-100</p>
       <div>
-        <ModalError />
+        <Snackbar />
+      </div>
+      <div>
+        <CardList />
       </div>
     </StyledProfile>
   )
