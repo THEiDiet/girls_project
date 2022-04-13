@@ -2,7 +2,7 @@ import { AppDispatch } from '../config'
 
 import { userApi } from 'api'
 import { authLogout, authorize, initialize } from 'store/reducers/appReducer'
-import { logOutAC, setUserData } from 'store/reducers/userReducer'
+import {getCardsAC, logOutAC, setUserData} from 'store/reducers/userReducer'
 import { UserInfoT } from 'types'
 
 export const initialization = () => (dispatch: AppDispatch) => {
@@ -20,5 +20,11 @@ export const logOutTC = () => (dispatch: AppDispatch) => {
   userApi.logout().then(res => {
     dispatch(authLogout(false))
     dispatch(logOutAC())
+  })
+}
+
+export const getCardsTC = () => (dispatch: AppDispatch) => {
+  userApi.getCards().then(res => {
+    dispatch(getCardsAC(res.data))
   })
 }
