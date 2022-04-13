@@ -1,19 +1,12 @@
 import React, { useState } from 'react'
 
 import { useFormik } from 'formik'
-import {Navigate, useNavigate} from 'react-router-dom'
-
-import { CheckBox } from '../../components/common/checkbox/CheckBox'
-import { Paths } from '../../enums'
-import { setUserData } from 'store/reducers/userReducer'
+import { Navigate } from 'react-router-dom'
 
 import { LoginAPI } from 'api/LoginAPI'
-import {useAppDispatch, useAppSelector} from 'hooks/useAppDispatchAndSelector'
+import { useAppDispatch } from 'hooks/useAppDispatchAndSelector'
 import { setUserData } from 'store/reducers/userReducer'
 import { Button } from 'styles'
-import { Input } from 'components/common/input/Input'
-import { useAppDispatch } from 'hooks/useAppDispatchAndSelector'
-import { Button, FormWrapper, LinkStyle, InputsWrapper, HelpText } from 'styles'
 
 const MIN_PASS_LENGTH = 7
 
@@ -34,10 +27,6 @@ type AuthResponse =
     }
   | string
 
-type handleResponseT = {
-  [key: string]: string
-}
-
 type FormikErrorType = {
   email?: string
   password?: string
@@ -45,7 +34,6 @@ type FormikErrorType = {
 }
 
 export const Login = (): any => {
-  const [userName, setUserName] = useState('')
   const [error, setError] = useState('')
   const dispatch = useAppDispatch()
 
