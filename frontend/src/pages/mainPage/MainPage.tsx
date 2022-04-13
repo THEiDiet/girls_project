@@ -1,15 +1,15 @@
-import React from 'react'
+import React, { FC } from 'react'
 
 import { SearchField } from '../../components/common/searchField/SearchField'
 
-export const MainPage = () => {
-  const someFoo = () => {
+export const MainPage: FC = () => {
+  const someFoo = (): void => {
     console.log('some foo')
   }
   return (
     <div>
       <div>Packs</div>
-      <SearchField />
+      <SearchField value="a" onChangeWithDebounce={() => console.log('a')} />
     </div>
   )
 }

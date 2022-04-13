@@ -10,6 +10,7 @@ type SearchFieldPropsType = {
 export const SearchField = memo(
   ({ onChangeWithDebounce, value }: SearchFieldPropsType) => {
     const [title, setTitle] = useState<string>(value)
+    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
     const [timerId, setTimerId] = useState<number>(0)
 
     const onChangeText = useCallback(
