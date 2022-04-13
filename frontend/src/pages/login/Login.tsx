@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
 
 import { useFormik } from 'formik'
-import {Navigate, useNavigate} from 'react-router-dom'
+import { Navigate } from 'react-router-dom'
 
 import { LoginAPI } from 'api/LoginAPI'
-import {useAppDispatch, useAppSelector} from 'hooks/useAppDispatchAndSelector'
+import { useAppDispatch } from 'hooks/useAppDispatchAndSelector'
 import { setUserData } from 'store/reducers/userReducer'
 import { Button } from 'styles'
 
@@ -27,10 +27,6 @@ type AuthResponse =
     }
   | string
 
-type handleResponseT = {
-  [key: string]: string
-}
-
 type FormikErrorType = {
   email?: string
   password?: string
@@ -38,10 +34,7 @@ type FormikErrorType = {
 }
 
 export const Login = (): any => {
-  const [userName, setUserName] = useState('')
   const [error, setError] = useState('')
-  // const isLoggedIn = useAppSelector(selectIsLoggedIn)
-  let navigate = useNavigate();
   const dispatch = useAppDispatch()
 
   const onSubmitForm = async (values: any): Promise<any> => {
@@ -79,18 +72,13 @@ export const Login = (): any => {
       onSubmitForm(values).then(res => {
         if (res?.email) {
           formik.resetForm()
-          // navigate('/profile')
           console.log('hello', res?.email)
+          return <Navigate to="/profile" />
         }
         console.log(res?.error || 'Something went wrong')
-        navigate('/profile')
       })
     },
   })
-
-  // if (isLoggedIn) {
-  //   return <Navigate to="/profile"/>
-  // }
 
   return (
     <div>
