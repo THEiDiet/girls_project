@@ -1,3 +1,15 @@
-import React, { ReactElement } from 'react'
+import React from 'react'
 
-export const MainPage = (): ReactElement => <div>Packs</div>
+import { SearchField } from '../../components/common/searchField/SearchField'
+
+export const MainPage = () => {
+  const someFoo = () => {
+    console.log('some foo')
+  }
+  return (
+    <div>
+      <div>Packs</div>
+      <SearchField />
+    </div>
+  )
+}
