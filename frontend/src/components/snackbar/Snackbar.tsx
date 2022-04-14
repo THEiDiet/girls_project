@@ -1,25 +1,41 @@
-import React, { FC, useState } from 'react'
+import React, { FC, useEffect, useState } from 'react'
 
 import { useDispatch } from 'react-redux'
 
-import { useAppSelector } from 'hooks'
-import { SnackbarErrorWrapper, ButtonCloseModal, Flex } from 'styles'
+import { SnackbarTimer } from 'enums/SnackbarTimer'
+import { useAppSelector, useDebounce } from 'hooks'
+import { setSnackbar } from 'store/reducers'
+import { Flex } from 'styles/FlexStyled'
+import { SnackbarErrorWrapper, ButtonCloseModal } from 'styles/StyledSnackbar'
 
 export const Snackbar: FC = () => {
   const dispatch = useDispatch()
 
-  const error = useAppSelector(state => state.app.errorMessage)
-  const [isError, setIsError] = useState(false)
+  const message = useAppSelector(state => state.app.snackbar)
+  const [isMessage, setIsMessage] = useState(false)
 
-  const closeModal = (): void => {
-    setIsError(false)
+  const closeSnackbar = (): void => {
+    setIsMessage(true)
+
+    setTimeout(() => {
+      dispatch(setSnackbar(null))
+    }, SnackbarTimer.DELETE_SNACKBAR_DELAY)
   }
+
+  const debounce = useDebounce(closeSnackbar, SnackbarTimer.AUTO_HIDE_DURATION_DELAY)
+
+  useEffect(() => {
+    if (message) {
+      setIsMessage(true)
+      debounce(message)
+    }
+  }, [message])
 
   return (
     <SnackbarErrorWrapper>
-      <Flex align-items="center">{error}</Flex>
+      <Flex align-items="center">{message}</Flex>
       <Flex alignSelf="self-start">
-        <ButtonCloseModal onClick={closeModal}>X</ButtonCloseModal>
+        <ButtonCloseModal role="presentation" onClick={closeSnackbar}>X</ButtonCloseModal>
       </Flex>
     </SnackbarErrorWrapper>
   )

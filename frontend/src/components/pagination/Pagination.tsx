@@ -1,70 +1,63 @@
 /* eslint-disable */
-import React, { FC } from 'react'
+import React, {FC, useState} from 'react'
 
-import { getPagesForRender } from 'utils/pages-for-render'
+import {Button} from 'styles';
+import {WrapperPaginator} from 'styles/StyledPagination';
 
 type PaginationType = {
-  page: any
   pageCount: any
   cardPacksTotalCount: any
-  setCurrentCards: (value: any) => void
   setCurrentPage: (value: any) => void
 }
-
 export const Pagination: FC<PaginationType> = ({
   cardPacksTotalCount,
-  page,
   pageCount,
-  setCurrentCards,
   setCurrentPage,
 }) => {
-  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
 
   const pagesCount = Math.ceil(cardPacksTotalCount / pageCount)
-  const pageNumbers: Array<any> = []
-  // eslint-disable-next-line no-plusplus,@typescript-eslint/no-magic-numbers
-  for (let i = 1; i < pagesCount; i += 1) {
-    pageNumbers.push(pageNumbers)
-  }
+  let pages: Array<any> = []
 
-  const pagesForRender = getPagesForRender(pageNumbers, page, pagesCount)
+  for (let i = 1; i < pagesCount; i++) {
+    pages.push(i)
+  }
+  const portionSize = 5; // порция которая видна в пагинации
+  const portionCount = Math.ceil(pagesCount / portionSize) // количество порций по 10 страниц
+
+  const [portion, setPortion] = useState(1)
+  const leftNumber = (portion - 1) * portionSize + 1
+  const rightNumber = portion * portionSize
+  const correctValue = pages.filter((p) => p ? p >= leftNumber && p <= rightNumber : '')
 
   const onClickPageChanged = (page: any) => {
-    setCurrentPage(page)
+      setCurrentPage(page)
   }
 
-  return (
-    <div>
-      <div>
-        {' '}
-        {page > 3 && (
-          <>
-            <button onClick={() => onClickPageChanged(page - 1)}>◁</button>
-            <button onClick={() => onClickPageChanged(1)}> 1</button>
-            <span>...</span>
-          </>
-        )}
-      </div>
 
-      <div>
-        {pagesForRender.map(p => (
-          <button onClick={() => onClickPageChanged(p)} key={p}>
-            {' '}
-            {p}{' '}
-          </button>
-        ))}
-      </div>
-      <div>
-        {page < pageNumbers.length - 2 && (
-          <>
-            <span>...</span>
-            <button onClick={() => onClickPageChanged(pageNumbers.length)}>
-              {pageNumbers.length}
-            </button>
-            <button onClick={() => onClickPageChanged(page + 1)}>▷</button>
-          </>
-        )}
-      </div>
-    </div>
+  return (
+      <WrapperPaginator>
+          {/*<Select count={pageCount}/>*/}
+          {portion > 1 &&
+              <Button onClick={() => {
+                setPortion(portion - 1)
+              }} >
+                Prev
+              </Button>
+          }
+          {correctValue.map(p => {
+            return (
+                <Button size="small"
+                        key={p}
+                        onClick={() => onClickPageChanged(p)}
+                        style={{height: '30px', width: '30px', margin: '10px', textAlign: 'center', cursor: 'pointer'}}>{p}
+                </Button>
+            )
+          })}
+          {portionCount > portion &&
+              <Button  onClick={() => {
+                setPortion(portion + 1)
+              }} >Next
+              </Button>}
+      </WrapperPaginator>
   )
 }

@@ -2,11 +2,11 @@ import React, { FC } from 'react'
 
 import { useNavigate } from 'react-router-dom'
 
-import { Snackbar } from 'components/snackbar/Snackbar'
 import { Paths } from 'enums'
 import { useAppSelector } from 'hooks'
 import { CardList } from 'pages/cardList/CardList'
 import { StyledProfile, StyledUserImg } from 'styles'
+import { WrapperProfile } from 'styles/ProfileStyled'
 
 export const Profile: FC = () => {
   const navigate = useNavigate()
@@ -19,18 +19,15 @@ export const Profile: FC = () => {
   }
 
   return (
-    <StyledProfile>
-      <h1>Profile</h1>
-      <StyledUserImg src={name.avatar} alt="user-avatar" />
-      <h2>{name.name}</h2>
-      <h3>Number of card</h3>
-      <p>1-100</p>
-      <div>
-        <Snackbar />
-      </div>
-      <div>
-        <CardList />
-      </div>
-    </StyledProfile>
+    <WrapperProfile>
+      <StyledProfile>
+        <h1>Profile</h1>
+        <StyledUserImg src={name.avatar} alt="user-avatar" />
+        <h2>{name.name}</h2>
+        <h3>Number of card</h3>
+        <p>1-100</p>
+      </StyledProfile>
+      <CardList />
+    </WrapperProfile>
   )
 }
