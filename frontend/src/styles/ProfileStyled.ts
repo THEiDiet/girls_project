@@ -2,19 +2,21 @@ import styled from 'styled-components'
 
 export const WrapperProfile = styled.div`
   width: 100%;
-  height: 90%;
+  height: 100%;
   display: flex;
-  background: palevioletred;
+  align-items: center;
+  justify-content: center;
 `
 
 export const StyledProfile = styled.div`
   width: 340px;
-  //height: 540px;
-  //margin-top: 50px;
+  height: 540px;
+  margin-top: 50px;
   display: flex;
   align-items: center;
   flex-direction: column;
   background: #365a67;
+  border-radius: 5px;
 `
 
 export const StyledUserImg = styled.img`

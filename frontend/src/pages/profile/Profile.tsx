@@ -4,9 +4,7 @@ import { useNavigate } from 'react-router-dom'
 
 import { Paths } from 'enums'
 import { useAppSelector } from 'hooks'
-import { CardList } from 'pages/cardList/CardList'
-import { StyledProfile, StyledUserImg } from 'styles'
-import { WrapperProfile } from 'styles/ProfileStyled'
+import { StyledProfile, StyledUserImg, WrapperProfile } from 'styles'
 
 export const Profile: FC = () => {
   const navigate = useNavigate()
@@ -24,10 +22,9 @@ export const Profile: FC = () => {
         <h1>Profile</h1>
         <StyledUserImg src={name.avatar} alt="user-avatar" />
         <h2>{name.name}</h2>
-        <h3>Number of card</h3>
-        <p>1-100</p>
+        <h2>My cards:</h2>
+        <h3>{name.publicCardPacksCount}</h3>
       </StyledProfile>
-      <CardList />
     </WrapperProfile>
   )
 }
