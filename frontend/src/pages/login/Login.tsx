@@ -1,12 +1,14 @@
-import React, { useState } from 'react'
+import React from 'react'
 
 import { useFormik } from 'formik'
-import { Navigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
-import { LoginAPI } from 'api/LoginAPI'
+import { CheckBox } from 'components/common/checkbox/CheckBox'
+import { Input } from 'components/common/input/Input'
+import { Paths } from 'enums'
 import { useAppDispatch } from 'hooks/useAppDispatchAndSelector'
-import { setUserData } from 'store/reducers/userReducer'
-import { Button } from 'styles'
+import { loginThunk } from 'store/thunks/userThunks/loginThunks'
+import { Button, FormWrapper, HelpText, InputsWrapper, LinkStyle } from 'styles'
 
 const MIN_PASS_LENGTH = 7
 
@@ -34,18 +36,9 @@ type FormikErrorType = {
 }
 
 export const Login = (): any => {
-  const [error, setError] = useState('')
   const dispatch = useAppDispatch()
+  const navigate = useNavigate()
 
-  const onSubmitForm = async (values: any): Promise<any> => {
-    const res: any = await LoginAPI.login(values)
-    if (typeof res === 'string') {
-      setError(res)
-      return { error: res }
-    }
-    dispatch(setUserData(res))
-    return { name: res.email }
-  }
   const formik = useFormik({
     initialValues: {
       email: 'nya-admin@nya.nya',
@@ -67,45 +60,55 @@ export const Login = (): any => {
       }
       return errors
     },
-    onSubmit: values => {
-      // eslint-disable-next-line consistent-return
-      onSubmitForm(values).then(res => {
-        if (res?.email) {
-          formik.resetForm()
-          console.log('hello', res?.email)
-          return <Navigate to="/profile" />
-        }
-        console.log(res?.error || 'Something went wrong')
-      })
+    onSubmit(values) {
+      // @ts-ignore
+      dispatch(loginThunk(values))
+      navigate('/profile')
     },
   })
 
   return (
-    <div>
-      <form onSubmit={formik.handleSubmit}>
-        <div>
-          <input {...formik.getFieldProps('email')} />
-          {formik.touched.email && formik.errors.email && (
-            <div style={{ color: 'red' }}>{formik.errors.email}</div>
-          )}
-        </div>
-
-        <div>
-          <input {...formik.getFieldProps('password')} />
-          {formik.touched.password && formik.errors.password && (
-            <div style={{ color: 'red' }}>{formik.errors.password}</div>
-          )}
-        </div>
-        <div>
-          <input
-            type="checkbox"
-            checked={formik.values.rememberMe}
-            {...formik.getFieldProps('rememberMe')}
-          />
-          remember me
-        </div>
-        <Button type="submit">sign in</Button>
-      </form>
-    </div>
+    <FormWrapper onSubmit={formik.handleSubmit}>
+      <InputsWrapper>
+        <Input
+          name="email"
+          label="Email"
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          value={formik.values.email}
+          error={formik.touched.email ? formik.errors.email : ''}
+          fullWidth
+        />
+        {formik.touched.email && formik.errors.email && (
+          <div style={{ color: 'red' }}>{formik.errors.email}</div>
+        )}
+        <Input
+          name="password"
+          label="password"
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          value={formik.values.email}
+          error={formik.touched.email ? formik.errors.email : ''}
+          fullWidth
+        />
+        {formik.touched.password && formik.errors.password && (
+          <div style={{ color: 'red' }}>{formik.errors.password}</div>
+        )}
+      </InputsWrapper>
+      <CheckBox
+        {...formik.getFieldProps('rememberMe')}
+        labelTitle="Remember me:"
+        type="checkbox"
+        autoComplete="on"
+      />
+      <Button fullWidth mb="0" type="submit">
+        Sign in
+      </Button>
+      <LinkStyle to={Paths.RestorePassword}>Forgot Password</LinkStyle>
+      <HelpText>Do not have an account?</HelpText>
+      <Button fullWidth mb="0" type="submit" onClick={() => navigate(Paths.Auth)}>
+        Sign up
+      </Button>
+    </FormWrapper>
   )
 }
