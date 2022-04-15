@@ -1,15 +1,18 @@
 {
   "files": {
-    "main.css": "/girls_project/static/css/main.9a29f2f7.css",
-    "main.js": "/girls_project/static/js/main.c26ccd60.js",
+    "main.css": "/girls_project/static/css/main.520baee7.css",
+    "main.js": "/girls_project/static/js/main.30c1e272.js",
     "static/js/787.ff1637a8.chunk.js": "/girls_project/static/js/787.ff1637a8.chunk.js",
+    "static/media/spinner.gif": "/girls_project/static/media/spinner.a6a3a82841044e500ad4.gif",
+    "static/media/opened.svg": "/girls_project/static/media/opened.7261edbc913552b2c90ba8dcdd0b8a2c.svg",
+    "static/media/closed.svg": "/girls_project/static/media/closed.551fd6af3fb69ab8aee34239827b3c0c.svg",
     "index.html": "/girls_project/index.html",
-    "main.9a29f2f7.css.map": "/girls_project/static/css/main.9a29f2f7.css.map",
-    "main.c26ccd60.js.map": "/girls_project/static/js/main.c26ccd60.js.map",
+    "main.520baee7.css.map": "/girls_project/static/css/main.520baee7.css.map",
+    "main.30c1e272.js.map": "/girls_project/static/js/main.30c1e272.js.map",
     "787.ff1637a8.chunk.js.map": "/girls_project/static/js/787.ff1637a8.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.9a29f2f7.css",
-    "static/js/main.c26ccd60.js"
+    "static/css/main.520baee7.css",
+    "static/js/main.30c1e272.js"
   ]
 }
