@@ -6,3 +6,5 @@ export type {
   validateEmailT,
   UtilType,
 } from './validationTypes'
+export type { PacksParamsType, PackType, PacksResponseType } from './CardsPackType'
+export type { CardsType, CardType } from './CardsType'

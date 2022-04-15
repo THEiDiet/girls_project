@@ -1,10 +1,21 @@
-import { AppDispatch } from '../config'
+import { AppDispatch, RootState } from '../config'
 
 import { cardsPackApi } from 'api/cardsPackAPI'
-import { getCardsAC } from 'store/reducers/cardsPackReducer'
+import { setPacksAC } from 'store/reducers/cardsPackReducer'
 
-export const getCardsPackTC = () => (dispatch: AppDispatch) => {
-  cardsPackApi.getCardsPack().then(res => {
-    dispatch(getCardsAC(res.data))
-  })
-}
+const selectPageCount = (state: RootState): number => state.pack.packs.pageCount
+
+const selectCurrentPage = (state: RootState): number => state.pack.packs.page
+
+export const getCardsPackTC =
+  () => async (dispatch: AppDispatch, getState: () => RootState) => {
+    try {
+      const pagesCount = selectPageCount(getState())
+      const currentPage = selectCurrentPage(getState())
+      cardsPackApi.getCardsPack(pagesCount, currentPage).then(res => {
+        dispatch(setPacksAC(res))
+      })
+    } catch (e) {
+      console.log(e)
+    }
+  }

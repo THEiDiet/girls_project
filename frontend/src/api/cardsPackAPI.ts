@@ -1,27 +1,29 @@
-
 import { instance } from 'api/config'
-import { SortPackType } from 'store/reducers/cardsPackReducer'
+import { PackType } from 'types'
 
 export const cardsPackApi = {
-  getCardsPack() // userId: string,
-  // pageCount: string,
-  // page: number,
-  // packName: string,
-  // sortPacks: SortPackType,
-  // min: number,
-  // max: number,
-  {
-    return instance.get('cards/pack', {
-      // params: {
-      //   user_id: userId,
-      //   pageCount,
-      //   page,
-      //   packName,
-      //   sortPacks,
-      //   min,
-      //   max,
-      // },
-    })
+  getCardsPack(
+    // packName: string,
+    // min: number,
+    // max: number,
+    // sortPacks: string,
+    pageCount: number,
+    page: number,
+    // userId: string,
+  ) {
+    return instance
+      .get<PackType>('cards/pack', {
+        params: {
+          // packName,
+          // min,
+          // max,
+          // sortPacks,
+          pageCount,
+          page,
+          // user_id: userId,
+        },
+      })
+      .then(res => res.data)
   },
   addCardPack(cardPackName: string) {
     const dataForPost: addCardsPackPostType = {

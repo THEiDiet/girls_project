@@ -4,6 +4,7 @@ import React, {FC, useState} from 'react'
 import {Button} from 'styles';
 import {WrapperPaginator} from 'styles/StyledPagination';
 
+
 type PaginationType = {
   pageCount: any
   cardPacksTotalCount: any
@@ -30,7 +31,7 @@ export const Pagination: FC<PaginationType> = ({
   const correctValue = pages.filter((p) => p ? p >= leftNumber && p <= rightNumber : '')
 
   const onClickPageChanged = (page: any) => {
-      setCurrentPage(page)
+    setCurrentPage(page)
   }
 
 

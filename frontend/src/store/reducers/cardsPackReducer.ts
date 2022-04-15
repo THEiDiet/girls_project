@@ -1,46 +1,52 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-export type SortPackType =
-  | '0name'
-  | '1name'
-  | '0cardsCount'
-  | '1cardsCount'
-  | '0updated'
-  | '1updated'
-  | null
+import { PackType } from 'types'
+import { PacksType } from 'types/CardsPackType'
 
 const initialState = {
-  pack: {
-    cardPacks: [
-      {
-        _id: '',
-        user_id: '',
-        name: '',
-        cardsCount: '',
-        created: '',
-        updated: '',
-      },
-    ],
-    cardPacksTotalCount: '',
-    page: 1,
+  packs: {
+    minCardsCount: 0,
+    maxCardsCount: 30,
     pageCount: 5,
-  },
+    page: 1,
+    cardPacks: [] as PackType[],
+    cardPacksTotalCount: 0,
+  } as PacksType,
+  sort: '',
+  searchPack: '',
+  isMyPack: false,
+  rerenderFlag: ['rerender'],
+  localMinRage: 0,
+  localMaxRage: 30,
+  resultMessageAddPack: '',
 }
 
 const cardsPackSlice = createSlice({
   name: 'cardsPackSlice',
   initialState,
   reducers: {
-    getCardsAC: (state, action) => {
-      state.pack = action.payload
+    setPacksAC: (state, action) => {
+      state.packs = action.payload
     },
-    setCurrentCardsAC: (state, action) => {
-      state.pack = action.payload
+    setSearchPacksAC: (state, action) => {
+      state.packs = action.payload
     },
     setCurrentPageAC: (state, action) => {
-      state.pack.page = action.payload.page
+      // state.pack.page = action.payload.page
+    },
+    setPageCountCardsAC: (state, action) => {
+      state.packs.pageCount = action.payload.pageCount
+    },
+    rerenderPackAC: (state, action) => {
+      state.packs = action.payload.rerender
     },
   },
 })
-export const { getCardsAC, setCurrentPageAC, setCurrentCardsAC } = cardsPackSlice.actions
+export const {
+  setPacksAC,
+  setPageCountCardsAC,
+  setCurrentPageAC,
+  setSearchPacksAC,
+  rerenderPackAC,
+} = cardsPackSlice.actions
 export const cardsPackReducer = cardsPackSlice.reducer
