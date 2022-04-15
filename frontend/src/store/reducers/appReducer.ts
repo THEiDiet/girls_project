@@ -1,10 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 const initialState = {
-  errorMessage: "Let me think",
+  errorMessage: 'Let me think',
   isAuthorized: false,
   isInitialized: false,
-  isFetching: false,
 }
 const testSlice = createSlice({
   name: 'testReducer',

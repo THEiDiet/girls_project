@@ -1,13 +1,15 @@
-import React from 'react'
+import React, { FC, useState } from 'react'
 
 import { useFormik } from 'formik'
+import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 
+import { Paths } from 'enums'
+import { loginThunk } from 'store/thunks/loginThunks'
 import { CheckBox } from 'components/common/checkbox/CheckBox'
 import { Input } from 'components/common/input/Input'
-import { Paths } from 'enums'
 import { useAppDispatch } from 'hooks/useAppDispatchAndSelector'
-import { loginThunk } from 'store/thunks/userThunks/loginThunks'
+import { loginThunk as lTh } from 'store/thunks/userThunks/loginThunks'
 import { Button, FormWrapper, HelpText, InputsWrapper, LinkStyle } from 'styles'
 
 const MIN_PASS_LENGTH = 7
@@ -35,7 +37,7 @@ type FormikErrorType = {
   rememberMe?: boolean
 }
 
-export const Login = (): any => {
+export const Login: FC = () => {
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
 
