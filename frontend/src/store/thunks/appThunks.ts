@@ -1,6 +1,9 @@
 import { Dispatch } from '@reduxjs/toolkit'
 
 import { getCardsTC } from './cardsThunk'
+import { AppDispatch } from '../config'
+import { setUserData } from '../reducers'
+import { logOutAC } from '../reducers/userReducer'
 
 import { userApi } from 'api'
 import { authLogout, authorize, initialize } from 'store/reducers/appReducer'
@@ -15,7 +18,6 @@ export const initialization = () => (dispatch: Dispatch) => {
     } else {
       dispatch(authorize(true))
       dispatch(setUserData(res))
-      // @ts-ignore
       dispatch(getCardsTC())
     }
   })

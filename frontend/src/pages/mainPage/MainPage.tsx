@@ -1,3 +1,6 @@
+import React, { FC, useCallback, useState } from 'react'
+
+import { useDispatch } from 'react-redux'
 import React, { FC, useEffect } from 'react'
 
 import { useNavigate } from 'react-router-dom'
@@ -6,6 +9,8 @@ import { SearchField } from 'components/common/searchField/SearchField'
 import { Table } from 'components/table/Table'
 import { Paths } from 'enums'
 import { useAppSelector } from 'hooks'
+import { SearchField } from '../../components/common/searchField/SearchField'
+import {filterPacks} from "../../store/reducers/packReducer";
 
 export const MainPage: FC = () => {
   const navigate = useNavigate()
@@ -15,10 +20,25 @@ export const MainPage: FC = () => {
       navigate(Paths.Login)
     }
   }, [isAuth])
+  const packs = useAppSelector(state => state.packs.actualPacks)
+  const [valueInput, setValueInput] = useState('')
+  const dispatch = useDispatch()
+
+  const onChangeDebounceRequest = useCallback(
+    (title: string) => {
+      dispatch(filterPacks(title))
+    },
+    [dispatch],
+  )
+
   return (
     <div>
+      <SearchField
+        value=''
+        onChangeWithDebounce={onChangeDebounceRequest}
+        placeholder={"Enter pack's title for search"}
+      />
       <Table />
-      <SearchField value="a" onChangeWithDebounce={() => console.log('a')} />
-    </div>
+      </div>
   )
 }

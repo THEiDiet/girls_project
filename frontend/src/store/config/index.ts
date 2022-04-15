@@ -1,6 +1,8 @@
 import { configureStore, MiddlewareArray } from '@reduxjs/toolkit'
 import thunk from 'redux-thunk'
 
+import { packReducer } from '../reducers/packReducer'
+
 import { appReducer, userReducer } from 'store/reducers'
 import { cardsPackReducer } from 'store/reducers/cardsPackReducer'
 import { cardsReducer } from 'store/reducers/cardsReducer'
@@ -13,6 +15,7 @@ export const store = configureStore({
     pack: cardsPackReducer,
     cards: cardsReducer,
     packs: packsReducer,
+    pac: packReducer,
   },
   middleware: new MiddlewareArray().concat(thunk),
   devTools: process.env.NODE_ENV !== 'production',
