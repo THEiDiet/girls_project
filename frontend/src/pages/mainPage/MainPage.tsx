@@ -2,10 +2,10 @@ import React, { FC, useEffect } from 'react'
 
 import { useNavigate } from 'react-router-dom'
 
+import { SearchField } from 'components/common/searchField/SearchField'
 import { Table } from 'components/table/Table'
 import { Paths } from 'enums'
 import { useAppSelector } from 'hooks'
-import { SearchField } from 'components/common/searchField/SearchField'
 
 export const MainPage: FC = () => {
   const navigate = useNavigate()

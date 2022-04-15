@@ -68,8 +68,8 @@ export const Table: FC = () => {
       </TableRow>
       {tableRows}
       <Pagination
-        page={currentPage}
-        pageCount={portionSize}
+        // page={currentPage}
+        pageCount={currentPage}
         cardPacksTotalCount={cardPacksTotalCount}
         setCurrentPage={setCurrentPage}
       />

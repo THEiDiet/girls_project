@@ -11,7 +11,7 @@ const initialState = {
     page: 1,
     cardPacks: [] as PackType[],
     cardPacksTotalCount: 0,
-  } as PacksType,
+  } as unknown as PacksType,
   sort: '',
   searchPack: '',
   isMyPack: false,

@@ -1,15 +1,13 @@
-import React, { FC, useState } from 'react'
+import React, { FC } from 'react'
 
 import { useFormik } from 'formik'
-import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 
-import { Paths } from 'enums'
-import { loginThunk } from 'store/thunks/loginThunks'
 import { CheckBox } from 'components/common/checkbox/CheckBox'
 import { Input } from 'components/common/input/Input'
+import { Paths } from 'enums'
 import { useAppDispatch } from 'hooks/useAppDispatchAndSelector'
-import { loginThunk as lTh } from 'store/thunks/userThunks/loginThunks'
+import { loginThunk } from 'store/thunks/loginThunks'
 import { Button, FormWrapper, HelpText, InputsWrapper, LinkStyle } from 'styles'
 
 const MIN_PASS_LENGTH = 7
@@ -89,8 +87,8 @@ export const Login: FC = () => {
           label="password"
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
-          value={formik.values.email}
-          error={formik.touched.email ? formik.errors.email : ''}
+          value={formik.values.password}
+          error={formik.touched.password ? formik.errors.password : ''}
           fullWidth
         />
         {formik.touched.password && formik.errors.password && (

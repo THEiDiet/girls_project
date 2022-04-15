@@ -25,7 +25,7 @@ export const CardList: FC = () => {
   return (
     <div>
       <Pagination
-        page={page}
+        // page={page}
         pageCount={pageCount}
         cardPacksTotalCount={cardPacksTotalCount}
         setCurrentPage={setCurrentPage}
