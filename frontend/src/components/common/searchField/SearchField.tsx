@@ -1,33 +1,49 @@
-import React, { memo, useCallback, useState } from 'react'
+import React, {
+  FC,
+  memo,
+  MemoExoticComponent,
+  useCallback,
+  useRef,
+  useState,
+} from 'react'
 
 import { InputSearchField } from './InputSearchField'
 
 type SearchFieldPropsType = {
   onChangeWithDebounce: (title: string) => void
   value: string
+  // eslint-disable-next-line react/require-default-props
+  placeholder?: string
 }
+type SearchFieldT = MemoExoticComponent<FC<SearchFieldPropsType>>
 
-export const SearchField = memo(
-  ({ onChangeWithDebounce, value }: SearchFieldPropsType) => {
+export const SearchField: SearchFieldT = memo(
+  ({ onChangeWithDebounce, value, placeholder }: SearchFieldPropsType) => {
     const [title, setTitle] = useState<string>(value)
     // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-    const [timerId, setTimerId] = useState<number>(0)
+    const timerRef = useRef<number>(0)
 
     const onChangeText = useCallback(
-      // eslint-disable-next-line @typescript-eslint/no-shadow
-      (title: string) => {
-        setTitle(title)
-        clearTimeout(timerId)
+      (text: string): void => {
+        setTitle(text)
         // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-        const id: number = +setTimeout(onChangeWithDebounce, 500, title)
-        setTimerId(id)
+        if (timerRef.current && timerRef.current !== 0) {
+          clearTimeout(timerRef.current)
+        }
+
+        // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+        timerRef.current = +setTimeout(onChangeWithDebounce, 2000, text)
       },
-      [onChangeWithDebounce, timerId],
+      [onChangeWithDebounce, timerRef],
     )
 
     return (
       <div>
-        <InputSearchField value={title} onChangeText={onChangeText} />
+        <InputSearchField
+          value={title}
+          onChangeText={onChangeText}
+          placeholder={placeholder}
+        />
       </div>
     )
   },

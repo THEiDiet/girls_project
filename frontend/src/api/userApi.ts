@@ -55,7 +55,6 @@ export const userApi = {
     console.log(res)
   },
   getCards() {
-   return instance.get('cards/pack')
-  }
-
+    return instance.get('cards/pack?pageCount=4460')
+  },
 }

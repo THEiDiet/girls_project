@@ -2,6 +2,16 @@ import { createSlice } from '@reduxjs/toolkit'
 
 import { UserInfoT } from 'types'
 
+export type PacksParamsType = {
+  packName: string
+  min: number
+  max: number
+  sortPacks: string
+  page: number
+  pageCount: number
+  user_id: string
+}
+
 const initialState = {
   user: {} as UserInfoT,
   pack: {
@@ -19,6 +29,15 @@ const initialState = {
     page: 1,
     pageCount: 5,
   },
+  params: {
+    packName: 'kk',
+    min: 0,
+    max: 103,
+    sortPacks: '0updated',
+    page: 1,
+    pageCount: 10,
+    user_id: '',
+  } as PacksParamsType,
 }
 
 const userSlice = createSlice({

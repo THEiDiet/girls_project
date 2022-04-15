@@ -1,12 +1,15 @@
 import { configureStore, MiddlewareArray } from '@reduxjs/toolkit'
 import thunk from 'redux-thunk'
 
+import { packReducer } from '../reducers/packReducer'
+
 import { appReducer, userReducer } from 'store/reducers'
 
 export const store = configureStore({
   reducer: {
     app: appReducer,
     user: userReducer,
+    packs: packReducer,
   },
   middleware: new MiddlewareArray().concat(thunk),
   devTools: process.env.NODE_ENV !== 'production',
