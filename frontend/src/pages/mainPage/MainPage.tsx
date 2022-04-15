@@ -1,16 +1,13 @@
-import React, { FC, useCallback, useState } from 'react'
+import React, { FC, useCallback, useState, useEffect } from 'react'
 
 import { useDispatch } from 'react-redux'
-import React, { FC, useEffect } from 'react'
-
 import { useNavigate } from 'react-router-dom'
 
 import { SearchField } from 'components/common/searchField/SearchField'
 import { Table } from 'components/table/Table'
 import { Paths } from 'enums'
 import { useAppSelector } from 'hooks'
-import { SearchField } from '../../components/common/searchField/SearchField'
-import {filterPacks} from "../../store/reducers/packReducer";
+import { filterPacks } from 'store/reducers/packReducer'
 
 export const MainPage: FC = () => {
   const navigate = useNavigate()
@@ -34,11 +31,11 @@ export const MainPage: FC = () => {
   return (
     <div>
       <SearchField
-        value=''
+        value=""
         onChangeWithDebounce={onChangeDebounceRequest}
         placeholder={"Enter pack's title for search"}
       />
       <Table />
-      </div>
+    </div>
   )
 }
