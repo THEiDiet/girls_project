@@ -7,7 +7,7 @@ type PaginationType = {
   page: any
   pageCount: any
   cardPacksTotalCount: any
-  setCurrentCards: (value: any) => void
+  setCurrentCards?: (value: any) => void
   setCurrentPage: (value: any) => void
 }
 

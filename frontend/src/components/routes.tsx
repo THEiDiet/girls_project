@@ -3,14 +3,13 @@ import React, { FC, ReactElement, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { Navigate, Route, Routes, useNavigate } from 'react-router-dom'
 
-import { Paths } from '../enums'
-import { useAppSelector } from '../hooks'
-import { initialization } from '../store/thunks/appThunks'
-
 import { Header } from './header/Header'
 import Spinner from './spinner/Spinner'
 
+import { Paths } from 'enums'
+import { useAppSelector } from 'hooks'
 import { Auth, Login, MainPage, NotFound, Profile, RestorePassword } from 'pages'
+import { initialization } from 'store/thunks/appThunks'
 
 export const Router: FC = (): ReactElement => {
   const dispatch = useDispatch()
@@ -25,6 +24,9 @@ export const Router: FC = (): ReactElement => {
   useEffect(() => {
     if (isInitialized && !isAuthorized) {
       navigate(Paths.Login)
+    }
+    if (isInitialized && isAuthorized) {
+      navigate(Paths.Profile)
     }
   }, [isAuthorized])
 

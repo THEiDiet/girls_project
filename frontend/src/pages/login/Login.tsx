@@ -1,11 +1,11 @@
-import React, { useState } from 'react'
+import React, { FC, useState } from 'react'
 
 import { useFormik } from 'formik'
-import { Navigate } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 
-import { LoginAPI } from 'api/LoginAPI'
-import { useAppDispatch } from 'hooks/useAppDispatchAndSelector'
-import { setUserData } from 'store/reducers/userReducer'
+import { Paths } from 'enums'
+import { loginThunk } from 'store/thunks/loginThunks'
 import { Button } from 'styles'
 
 const MIN_PASS_LENGTH = 7
@@ -27,24 +27,25 @@ type AuthResponse =
     }
   | string
 
-type FormikErrorType = {
+type FormikErrorT = {
   email?: string
   password?: string
   rememberMe?: boolean
 }
 
-export const Login = (): any => {
+export const Login: FC = () => {
   const [error, setError] = useState('')
-  const dispatch = useAppDispatch()
-
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
   const onSubmitForm = async (values: any): Promise<any> => {
-    const res: any = await LoginAPI.login(values)
-    if (typeof res === 'string') {
-      setError(res)
-      return { error: res }
-    }
-    dispatch(setUserData(res))
-    return { name: res.email }
+    // const res: any = await LoginAPI.login(values)
+    dispatch(loginThunk(values))
+    // if (typeof res === 'string') {
+    //   setError(res)
+    //   return { error: res }
+    // }
+    // dispatch(setUserData(res))
+    // return { name: res.email }
   }
   const formik = useFormik({
     initialValues: {
@@ -53,7 +54,7 @@ export const Login = (): any => {
       rememberMe: false,
     },
     validate: values => {
-      const errors: FormikErrorType = {}
+      const errors: FormikErrorT = {}
       if (!values.email) {
         errors.email = 'Required'
       } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
@@ -70,12 +71,7 @@ export const Login = (): any => {
     onSubmit: values => {
       // eslint-disable-next-line consistent-return
       onSubmitForm(values).then(res => {
-        if (res?.email) {
-          formik.resetForm()
-          console.log('hello', res?.email)
-          return <Navigate to="/profile" />
-        }
-        console.log(res?.error || 'Something went wrong')
+        navigate(Paths.Profile)
       })
     },
   })

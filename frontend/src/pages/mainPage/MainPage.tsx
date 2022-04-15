@@ -1,15 +1,22 @@
-import React, { FC } from 'react'
+import React, { FC, useEffect } from 'react'
 
-import { SearchField } from '../../components/common/searchField/SearchField'
+import { useNavigate } from 'react-router-dom'
+
+import { Table } from 'components/table/Table'
+import { Paths } from 'enums'
+import { useAppSelector } from 'hooks'
 
 export const MainPage: FC = () => {
-  const someFoo = (): void => {
-    console.log('some foo')
-  }
+  const navigate = useNavigate()
+  const isAuth = useAppSelector(state => state.app.isAuthorized)
+  useEffect(() => {
+    if (!isAuth) {
+      navigate(Paths.Login)
+    }
+  }, [isAuth])
   return (
     <div>
-      <div>Packs</div>
-      <SearchField value="a" onChangeWithDebounce={() => console.log('a')} />
+      <Table />
     </div>
   )
 }

@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import React, { FC, useEffect } from 'react'
 
 import { useNavigate } from 'react-router-dom'
 
@@ -10,13 +10,14 @@ import { StyledProfile, StyledUserImg } from 'styles'
 
 export const Profile: FC = () => {
   const navigate = useNavigate()
-  // const isAuthorized = useAppSelector(state => state.app.isAuthorized)
   const isAuthorized = useAppSelector(state => state.app.isAuthorized)
   const name = useAppSelector(state => state.user.user)
 
-  if (!isAuthorized) {
-    navigate(Paths.Login)
-  }
+  useEffect(() => {
+    if (!isAuthorized) {
+      navigate(Paths.Login)
+    }
+  }, [isAuthorized])
 
   return (
     <StyledProfile>
@@ -25,9 +26,7 @@ export const Profile: FC = () => {
       <h2>{name.name}</h2>
       <h3>Number of card</h3>
       <p>1-100</p>
-      <div>
-        <Snackbar />
-      </div>
+      <div>{/* <Snackbar /> */}</div>
       <div>
         <CardList />
       </div>
