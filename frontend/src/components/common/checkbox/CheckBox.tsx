@@ -21,9 +21,9 @@ import { Label, Input, Checkmark } from 'styles/StyledCheckBox'
 
 export const CheckBox: FC<any> = memo(
   forwardRef(({ labelTitle, ...res }, ref) => (
-    <Label justifyContent="flex-start">
-      {labelTitle}
+    <Label justifyContent="center">
       <Input hidden={false} ref={ref} {...res} type="checkbox" />
+      {labelTitle}
       <Checkmark />
     </Label>
   )),
