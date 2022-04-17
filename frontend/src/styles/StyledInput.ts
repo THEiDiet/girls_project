@@ -15,7 +15,9 @@ export const StyledInput = styled.input.attrs<InputT, InputT>(
   display: block;
   appearance: none;
   padding: ${({ padding }) => padding};
-  border: 2px solid;
+  //border: 2px solid;
+  border: none;
+  border-bottom: 2px solid #365a67;
   border-radius: 2px;
   background: transparent;
   &:focus {
