@@ -10,10 +10,11 @@ export const WrapperProfile = styled.div`
 
 export const StyledProfile = styled.div`
   width: 340px;
-  height: 540px;
+  height: 340px;
   margin-top: 50px;
   display: flex;
   align-items: center;
+  justify-content: center;
   flex-direction: column;
   background: #365a67;
   border-radius: 5px;
@@ -23,4 +24,5 @@ export const StyledUserImg = styled.img`
   width: 150px;
   height: 150px;
   border-radius: 75px;
+  margin-bottom: 15px;
 `

@@ -6,10 +6,11 @@ export const Checkmark = styled.div`
   left: 0;
   height: 1.3em;
   width: 1.3em;
-  background-color: #DDE9EC;
+  background-color: #dde9ec;
   transition: all 0.3s;
   border-radius: 2px;
   margin-bottom: 10px;
+  margin-left: 10px;
 
   &:after {
     left: 0.45em;
@@ -18,7 +19,7 @@ export const Checkmark = styled.div`
     height: 0.5em;
     border: solid white;
     border-width: 0 0.15em 0.15em 0;
-    transform: rotate(45deg);   
+    transform: rotate(45deg);
   }
 
   &:after {
@@ -35,7 +36,7 @@ export const Input = styled.input`
     display: block;
   }
   &:checked ~ ${Checkmark} {
-    background-color: #365A67;
+    background-color: #365a67;
     animation: pop 0.5s;
     animation-direction: alternate;
   }
@@ -50,6 +51,8 @@ export const Label = styled.label<{ justifyContent?: CSSProp }>`
   display: flex;
   position: relative;
   cursor: pointer;
+  margin-top: 30px;
+  width: 100%;
   //user-select: none;
 `
 
