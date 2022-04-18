@@ -30,8 +30,8 @@ export const Button = styled.button.attrs<ButtonT, ButtonT>(({ type, size }) => 
   padding: ${({ size }) => size};
   border: none;
   border-radius: 2px;
-  margin-top: ${({ mt }) => mt || '1rem'};
-  margin-bottom: ${({ mb }) => mb || '1rem'};
+  margin-top: ${({ mt }) => mt || '0.1rem'};
+  margin-bottom: ${({ mb }) => mb || '0.1rem'};
   outline: none;
   cursor: pointer;
   width: ${({ fullWidth }) => (fullWidth ? '100%' : 'auto')};

@@ -8,7 +8,7 @@ import {WrapperPaginator} from 'styles/StyledPagination';
 type PaginationType = {
   pageCount: any
   cardPacksTotalCount: any
-  setCurrentPage: (value: any) => void
+  setCurrentPage: (page: number) => void
 }
 export const Pagination: FC<PaginationType> = ({
   cardPacksTotalCount,
@@ -30,10 +30,9 @@ export const Pagination: FC<PaginationType> = ({
   const rightNumber = portion * portionSize
   const correctValue = pages.filter((p) => p ? p >= leftNumber && p <= rightNumber : '')
 
-  const onClickPageChanged = (page: any) => {
+  const onClickPageChanged = (page: number) => {
     setCurrentPage(page)
   }
-
 
   return (
       <WrapperPaginator>

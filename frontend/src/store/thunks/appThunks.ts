@@ -3,11 +3,14 @@ import { Dispatch } from '@reduxjs/toolkit'
 import { setUserData } from '../reducers'
 import { logOutAC } from '../reducers/userReducer'
 
-import { getCardsTC } from './cardsThunk'
-
 import { userApi } from 'api'
-import { authLogout, authorize, initialize } from 'store/reducers/appReducer'
+import { RootState } from 'store/config'
+import { authorize, initialize } from 'store/reducers/appReducer'
 import { UserInfoT } from 'types'
+
+const min = (state: RootState): number => state.packs.rangeValues.minCardsCount
+const max = (state: RootState): number => state.packs.rangeValues.maxCardsCount
+const userId = (state: RootState): string => state.user.userInfo.userId
 
 export const initialization = () => (dispatch: Dispatch) => {
   userApi.me().then((res: UserInfoT | string) => {
@@ -17,14 +20,12 @@ export const initialization = () => (dispatch: Dispatch) => {
     } else {
       dispatch(authorize(true))
       dispatch(setUserData(res))
-      // @ts-ignore
-      dispatch(getCardsTC())
     }
   })
 }
 export const logOutTC = () => (dispatch: Dispatch) => {
-  userApi.logout().then(res => {
-    dispatch(authLogout(false))
+  userApi.logout().then(() => {
+    dispatch(authorize(false))
     dispatch(logOutAC())
   })
 }

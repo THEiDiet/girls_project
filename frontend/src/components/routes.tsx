@@ -25,9 +25,6 @@ export const Router: FC = (): ReactElement => {
     if (isInitialized && !isAuthorized) {
       navigate(Paths.Login)
     }
-    if (isInitialized && isAuthorized) {
-      navigate(Paths.Profile)
-    }
   }, [isAuthorized])
 
   if (!isInitialized) {

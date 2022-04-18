@@ -1,40 +1,27 @@
-import React, { FC, useCallback, useState, useEffect } from 'react'
+import React, { FC, useEffect } from 'react'
 
 import { useDispatch } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
+import { Navigate } from 'react-router-dom'
 
-import { SearchField } from 'components/common/searchField/SearchField'
 import { Table } from 'components/table/Table'
 import { Paths } from 'enums'
 import { useAppSelector } from 'hooks'
-import { filterPacks } from 'store/reducers/packReducer'
+import { getPacksTC } from 'store/thunks/packsThunk'
 
 export const MainPage: FC = () => {
-  const navigate = useNavigate()
   const isAuth = useAppSelector(state => state.app.isAuthorized)
-  useEffect(() => {
-    if (!isAuth) {
-      navigate(Paths.Login)
-    }
-  }, [isAuth])
-  const packs = useAppSelector(state => state.packs.actualPacks)
-  const [valueInput, setValueInput] = useState('')
+
   const dispatch = useDispatch()
 
-  const onChangeDebounceRequest = useCallback(
-    (title: string) => {
-      dispatch(filterPacks(title))
-    },
-    [dispatch],
-  )
+  useEffect(() => {
+    dispatch(getPacksTC({}))
+  }, [])
 
+  if (!isAuth) {
+    return <Navigate to={Paths.Login} />
+  }
   return (
     <div>
-      <SearchField
-        value=""
-        onChangeWithDebounce={onChangeDebounceRequest}
-        placeholder={"Enter pack's title for search"}
-      />
       <Table />
     </div>
   )

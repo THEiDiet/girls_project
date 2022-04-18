@@ -26,14 +26,10 @@ type AuthResponse =
     }
   | string
 
-type handleResponseT = {
-  [key: string]: string
-}
-
 export const Auth: FC = () => {
   const onSubmitForm = async (
     values: Omit<AuthT, 'rememberMe'>,
-  ): Promise<handleResponseT> => {
+  ): Promise<any> => {
     const res: AuthResponse = await userApi.register(values)
     if (typeof res === 'string') {
       return { error: res }
@@ -48,11 +44,8 @@ export const Auth: FC = () => {
       password: '',
     },
     onSubmit: (values: Omit<AuthT, 'rememberMe'>) => {
-      onSubmitForm(values).then((res: handleResponseT) => {
-        if (res?.name) {
-          formik.resetForm()
-          console.log('hello', res?.name)
-        } else console.log(res?.error || 'Something went wrong')
+      onSubmitForm(values).then(() => {
+        formik.resetForm()
       })
     },
   })

@@ -15,7 +15,7 @@ export const Modal = (props: ModalProps): any => {
   const root = document.querySelector('body')
   const wrapper = (
     <ModalStyled>
-      <div>
+      <div className="modal">
         <button type="button" onClick={handleOpen}>
           close
         </button>

@@ -1,7 +1,9 @@
 import { AxiosResponse } from 'axios'
 
 import { instance } from 'api/config'
-import { GetPackResponseT, PackT } from 'types'
+import { EHelpers } from 'enums'
+import { GetPacksResponseT } from 'types'
+import { GetOnePackRequest, GetPacksPayload } from 'types/PacksT'
 
 export const cardsApi = {
   setPack() {
@@ -15,17 +17,53 @@ export const cardsApi = {
     const res = instance.post('cards/pack', data)
     console.log(res)
   },
-  getPacks: async (payload: string = '4660') => {
-    const res: AxiosResponse<GetPackResponseT> = await instance.get(
-      `cards/pack${payload && `?pageCount=${payload}`}`,
-    )
-    return res.data
+  getPacks: (
+    payload: Partial<GetPacksPayload>,
+  ): Promise<AxiosResponse<GetPacksResponseT>> => {
+    const {
+      packName = '',
+      min = EHelpers.Zero,
+      sortPacks = '',
+      userId = '',
+      max = EHelpers.Ten,
+      pageCount = EHelpers.Ten,
+      page = EHelpers.One,
+    } = payload
+    return instance.get<GetPacksResponseT>(`cards/pack`, {
+      params: {
+        packName,
+        min,
+        max,
+        sortPacks,
+        pageCount,
+        page,
+        user_id: userId,
+      },
+    })
   },
-  getOnePackCards: async (payload: string = '') => {
-    const res: AxiosResponse<PackT> = await instance.get(
-      // TODO: сделать полный набор параметров, не только cardsPack
-      `cards/card?cardsPack_id=${payload}`,
-    )
-    return res.data
+
+  getOnePack: (payload: Partial<GetOnePackRequest>) => {
+    const {
+      cardQuestion,
+      cardsPackId,
+      cardAnswer,
+      sortCards,
+      pageCount,
+      page,
+      min = EHelpers.Zero,
+      max,
+    } = payload
+    return instance.get(`cards/card`, {
+      params: {
+        cardAnswer,
+        cardQuestion,
+        cardsPack_id: cardsPackId,
+        min,
+        max,
+        sortCards,
+        page,
+        pageCount,
+      },
+    })
   },
 }

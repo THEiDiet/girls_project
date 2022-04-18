@@ -1,13 +1,6 @@
-import React, {
-  DetailedHTMLProps,
-  FC,
-  forwardRef,
-  InputHTMLAttributes,
-  memo,
-  RefAttributes,
-} from 'react'
+import React, { FC, forwardRef, memo } from 'react'
 
-import { Label, Input, Checkmark } from 'styles/StyledCheckBox'
+import { Checkmark, Input, Label } from 'styles/StyledCheckBox'
 
 // type DefaultInputPropsType = DetailedHTMLProps<
 //   InputHTMLAttributes<HTMLInputElement>,

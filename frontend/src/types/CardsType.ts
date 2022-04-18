@@ -1,34 +1,23 @@
-export type CardType = {
-  answer: string
-  answerImg: string
-  answerVideo: string
-  cardsPack_id: string
-  comments: string
-  created: string
-  grade: number
-  more_id: string
-  question: string
-  questionImg: string
-  questionVideo: string
-  rating: number
-  shots: number
-  type: string
-  updated: string
-  user_id: string
-  __v: number
-  _id: string
-}
-
-export type CardsType = {
-  cards: CardType[]
+export type PackT = {
+  cards: CardT[]
   cardsTotalCount: number
   maxGrade: number
   minGrade: number
-  packUserId: string
   page: number
   pageCount: number
-  token: string
-  tokenDeathTime: number
+  packUserId: string
+}
+
+type CardT = {
+  answer: string
+  question: string
+  cardsPack_id: string
+  grade: number
+  shots: number
+  user_id: string
+  created: string
+  updated: string
+  _id: string
 }
 
 export type AddCardType = {
